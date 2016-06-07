@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<title>6.11 League Neural Network</title>
+
+	<link rel="icon" type="image/png" href="../resources/d/d.png">
+
+	<script type="text/javascript" src="../resources/jquery/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../resources/jquery/jquery-migrate-1.2.1.js"></script>
+	<script type="text/javascript" src="../resources/jquery/jquery-ui.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+	<script type="text/javascript" src="../resources/multiple-select/multiple-select.js"></script>
+	<link rel="stylesheet" type="text/css" href="../resources/multiple-select/multiple-select.css">
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<script type="text/javascript" src="js/league.js"></script>
+	<script type="text/javascript" src="js/design.js"></script>
+	<script type="text/javascript" src="js/process.js"></script>
+
+	<body>
+		<div id="background"></div>
+
+		<div id="champ-select">
+			<div class="team" id="blue-team">
+				<div class="picks">
+					<div class="pick"></div>
+					<div class="pick"></div>
+					<div class="pick"></div>
+					<div class="pick"></div>
+					<div class="pick"></div>
+				</div>
+			</div>
+
+			<div id="champ-pool">
+				<img class="champ" src="images/square/undo.png" onclick="undo()"></img>
+			</div>
+
+			<div class="team" id="red-team">
+				<div class="picks">
+					<div class="pick"></div>
+					<div class="pick"></div>
+					<div class="pick"></div>
+					<div class="pick"></div>
+					<div class="pick"></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="controls">
+			<div>
+				<h3>Patch 6.11</h3>
+				<h3>Division:
+					<select id="division" onchange="stop()">
+						<option value="challenger" selected>Challenger 6/4/16</option>
+						<option value="master">Master 6/4/16</option>
+						<option value="diamond">Diamond 6/4/16</option>
+						<option value="platinum">Platinum 6/4/16</option>
+						<option value="gold">Gold 6/4/16</option>
+						<option value="silver">Silver 6/4/16</option>
+						<option value="bronze">Bronze 6/4/16</option>
+					</select>
+				</h3>
+			</div>
+
+			<div>
+				<div>
+					<h3>Bans</h3>
+					<select id="bans" class="bans" data-minimum-count-selected="3"></select>
+				</div>
+				<div>
+					<h3>Self-Bans</h3>
+					<select id="self-bans" class="bans" data-minimum-count-selected="8"></select>
+				</div>
+			</div>
+
+			<div id="depth-div">
+				<div>
+					<h3>Depth</h3>
+					<div id="depth" class="slider" data-range="1,10,1"></div>
+				</div>
+				<div>
+					<h3>Memory</h3>
+					<div id="memory" class="slider" data-range="10,100,10"></div>
+				</div>
+			</div>
+
+			<div>
+				<button id="start" onclick="start()">Start</button>
+				<button id="stop" onclick="stop()" disabled>Stop</button>
+			</div>
+
+			<div id="status-div">
+				Status: <span id="status">Idle</span>
+			</div>
+		</div>
+	</body>
+</html>
