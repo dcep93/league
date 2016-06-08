@@ -1,3 +1,3 @@
-function process(data, showResults, stop){
+function process(data, showResult, stop){
 	
 }

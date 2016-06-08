@@ -81,11 +81,11 @@ html, body, #background {
 	width: 350px;
 }
 
-#depth-div {
+#slider-div {
 	flex-grow: 1;
 }
 
-#depth-div > * {
+#slider-div > * {
 	padding-bottom: 24px;
 }
 

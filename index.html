@@ -14,7 +14,7 @@
 
 	<link rel="stylesheet" type="text/css" href="style.css">
 
-	<script type="text/javascript" src="js/league.js"></script>
+	<script type="text/javascript" src="js/game.js"></script>
 	<script type="text/javascript" src="js/design.js"></script>
 	<script type="text/javascript" src="js/process.js"></script>
 
@@ -23,43 +23,20 @@
 
 		<div id="champ-select">
 			<div class="team" id="blue-team">
-				<div class="picks">
-					<div class="pick"></div>
-					<div class="pick"></div>
-					<div class="pick"></div>
-					<div class="pick"></div>
-					<div class="pick"></div>
-				</div>
+				<div class="picks"></div>
 			</div>
 
-			<div id="champ-pool">
-				<img class="champ" src="images/square/undo.png" onclick="undo()"></img>
-			</div>
+			<div id="champ-pool"></div>
 
 			<div class="team" id="red-team">
-				<div class="picks">
-					<div class="pick"></div>
-					<div class="pick"></div>
-					<div class="pick"></div>
-					<div class="pick"></div>
-					<div class="pick"></div>
-				</div>
+				<div class="picks"></div>
 			</div>
 		</div>
 
 		<div id="controls">
 			<div>
-				<h3>Patch 6.11</h3>
 				<h3>Division:
-					<select id="division" onchange="stop()">
-						<option value="challenger" selected>Challenger 6/4/16</option>
-						<option value="master">Master 6/4/16</option>
-						<option value="diamond">Diamond 6/4/16</option>
-						<option value="platinum">Platinum 6/4/16</option>
-						<option value="gold">Gold 6/4/16</option>
-						<option value="silver">Silver 6/4/16</option>
-						<option value="bronze">Bronze 6/4/16</option>
-					</select>
+					<select id="division" onchange="stop()"></select>
 				</h3>
 			</div>
 
@@ -74,7 +51,7 @@
 				</div>
 			</div>
 
-			<div id="depth-div">
+			<div id="slider-div">
 				<div>
 					<h3>Depth</h3>
 					<div id="depth" class="slider" data-range="1,10,1"></div>
@@ -82,6 +59,10 @@
 				<div>
 					<h3>Memory</h3>
 					<div id="memory" class="slider" data-range="10,100,10"></div>
+				</div>
+				<div>
+					<h3>Pruning Factor</h3>
+					<div id="pruning" class="slider" data-range="0,90,10"></div>
 				</div>
 			</div>
 
