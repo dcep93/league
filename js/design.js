@@ -21,8 +21,8 @@ function initialize(){
 	}
 
 	$('#division').empty();
-	for(var d of game.division){
-		$("<option>").attr('value', d).text(game.division[d]).appendTo("#division");
+	for(var d in game.divisions){
+		$("<option>").attr('value', d).text(game.divisions[d]).appendTo("#division");
 	}
 	
 
@@ -37,13 +37,14 @@ function initialize(){
 		$(this).slider({
 			'min': range[0],
 			'max': range[1],
-			'step': range[2],
 			'value': range[0]
 		});
 		for(var i=range[0]; i <= range[1]; i += range[2]){
 			$('<label>').text(i).css('left', (i-range[0])/(range[1]-range[0])*100 + '%').appendTo($(this));
 		}
 	});
+
+	$('#pruning label').text(function(){ return $(this).text() + '%'});
 }
 
 function buildSquare(champ){
