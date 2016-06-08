@@ -12,7 +12,7 @@ function initialize(){
 		$('<div class="pick">').appendTo('.picks');
 	}
 
-	$("#champ-pool").empty().append($('<img class="champ"').attr("src", "images/shared/undo.png").click(undo));
+	$("#champ-pool").empty().append($('<img class="champ">').attr("src", "images/shared/undo.png").click(undo));
 	$('.bans').empty();
 
 	for(var champ of game.champs){
