@@ -93,10 +93,8 @@ function start(){
 	$("#start").attr("disabled",'');
 
 	data = {
-		'game': game,
 		'blueTeam': getTeam('#blue-team'),
 		'redTeam': getTeam('#red-team'),
-		'division': $('#division').val(),
 		'bans': $("#bans").multipleSelect("getSelects"),
 		'selfBans': $("#self-bans").multipleSelect("getSelects"),
 		'depth': $("#depth").slider( "option", "value" ),
@@ -104,7 +102,9 @@ function start(){
 		'pruning': $("#pruning").slider( "option", "value" )
 	}
 
-	process(data, showResult, stop);
+	var network = networks[game][$('#division').val()];
+
+	process(data, network, showResult, stop);
 }
 
 function stop(){

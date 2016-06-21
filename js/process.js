@@ -1,18 +1,21 @@
-// array data = {
-// 	'game': game,
-// 	'blueTeam': getTeam('#blue-team'),
-// 	'redTeam': getTeam('#red-team'),
-// 	'division': $('#division').val(),
-// 	'bans': $("#bans").multipleSelect("getSelects"),
-// 	'selfBans': $("#self-bans").multipleSelect("getSelects"),
-// 	'depth': $("#depth").slider( "option", "value" ),
-// 	'memory': $("#memory").slider( "option", "value" ),
-// 	'pruning': $("#pruning").slider( "option", "value" )
+// Array data = {
+// 	'blueTeam': Array[int],
+// 	'redTeam': Array[int],
+// 	'bans': Array[int],
+// 	'selfBans': Array[int],
+// 	'depth': int,
+// 	'memory': int,
+// 	'pruning': float
 // }
 //
+// Array network = {
+//   'game': String,
+//   'division': String,
+//   'network': Array[Array[Array[float]]] (array of matrices)
+// }
 // function showResult({blueTeam: Array[int], redTeam: Array[int], score: int, popularity: int} result, int index, bool overflow);
 // function stop();
 
-function process(data, showResult, stop){
+function process(data, network, showResult, stop){
 	
 }
