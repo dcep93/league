@@ -115,7 +115,7 @@ function stop(){
 	$("#stop").attr("disabled",'');
 }
 
-// {blueTeam: Array[int], redTeam: Array[int], score: int, popularity: int} result
+// {blueTeam: Array[int], redTeam: Array[int], score: float, popularity: float} result
 function buildResult(result){
 	return $('<div>');
 }
