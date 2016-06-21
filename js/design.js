@@ -105,7 +105,9 @@ function start(){
 
 	var network = networks[game][$('#division').val()].network;
 
-	process(data, network, showResult, stop);
+	process(data, network, showResult);
+
+	stop();
 }
 
 function stop(){
