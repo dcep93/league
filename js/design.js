@@ -112,11 +112,11 @@ function stop(){
 	$("#stop").attr("disabled",'');
 }
 
+// {blueTeam: Array[int], redTeam: Array[int], score: int, popularity: int} result
 function buildResult(result){
 	return $('<div>');
 }
 
-// {blueTeam: Array[int], redTeam: Array[int], score: int, popularity: int} result, int index, bool overflow
 function showResult(result, index, overflow){
 	var results = $('#results');
 
