@@ -17,9 +17,10 @@ function initialize(){
 	$("#champ-pool").empty().append($('<img class="champ">').attr("src", "images/shared/undo.png").click(undo));
 	$('.bans').empty();
 
-	for(var champ of games[game].champs){
+	for(var i=0;i<games[game].champs.length;i++){
+		var champ = games[game].champs[i];
 		$('#champ-pool').append(buildSquare(champ));
-		$('.bans').append(buildBan(champ));
+		$('.bans').append(buildBan(champ, i));
 	}
 
 	$('#division').empty();
@@ -53,8 +54,8 @@ function buildSquare(champ){
 	return $('<img class="champ">').attr("src", "images/" + game + "/square/" + champ + ".png").attr('data-champ', champ).click(pick);
 }
 
-function buildBan(champ){
-	return $('<option>').text(' '+champ).attr('value', champ);
+function buildBan(champ, index){
+	return $('<option>').text(' '+champ).attr('value', index);
 }
 
 function buildSplash(champ){
