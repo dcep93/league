@@ -104,7 +104,7 @@ function start(){
 		'pruning': $("#pruning").slider( "option", "value" )
 	}
 
-	process(data, showResults, stop);
+	process(data, showResult, stop);
 }
 
 function stop(){
@@ -112,7 +112,17 @@ function stop(){
 	$("#stop").attr("disabled",'');
 }
 
-// {blueTeam: Array[int], redTeam: Array[int], score: int, popularity: int} result, int index
-function showResult(results, index){
+function buildResult(result){
+	return $('<div>');
+}
 
+// {blueTeam: Array[int], redTeam: Array[int], score: int, popularity: int} result, int index, bool overflow
+function showResult(result, index, overflow){
+	var results = $('#results');
+
+	buildResult(result).insertAfter(results.eq(index));
+
+	if(overflow){
+		results.last().remove();
+	}
 }
