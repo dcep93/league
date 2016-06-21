@@ -103,7 +103,7 @@ function start(){
 		'pruning': $("#pruning").slider( "option", "value" )
 	}
 
-	var network = networks[game][$('#division').val()];
+	var network = networks[game][$('#division').val()].network;
 
 	process(data, network, showResult, stop);
 }

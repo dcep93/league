@@ -8,11 +8,7 @@
 // 	'pruning': float
 // }
 //
-// Array network = {
-//   'game': String,
-//   'division': String,
-//   'network': Array[Array[Array[float]]] (array of matrices)
-// }
+// Array[Array[Array[float]]] network (array of matrices)
 // function showResult({blueTeam: Array[int], redTeam: Array[int], score: int, popularity: int} result, int index, bool overflow);
 // function stop();
 
