@@ -139,12 +139,12 @@ games = {
 
 		'divisions': {
 			'challenger': 'Challenger 6/4/16',
-			'master': 'master 6/4/16',
-			'diamond': 'diamond 6/4/16',
-			'platinum': 'platinum 6/4/16',
-			'gold': 'gold 6/4/16',
-			'silver': 'silver 6/4/16',
-			'bronze': 'bronze 6/4/16',
+			'master': 'Master 6/4/16',
+			'diamond': 'Diamond 6/4/16',
+			'platinum': 'Platinum 6/4/16',
+			'gold': 'Gold 6/4/16',
+			'silver': 'Silver 6/4/16',
+			'bronze': 'Bronze 6/4/16',
 		},
 	}
 }

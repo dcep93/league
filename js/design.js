@@ -19,7 +19,7 @@ function initialize(){
 
 	for(var i=0;i<games[game].champs.length;i++){
 		var champ = games[game].champs[i];
-		$('#champ-pool').append(buildSquare(champ));
+		buildSquare(champ).addClass('champ').attr('data-champ', champ).click(pick).appendTo('#champ-pool');
 		$('.bans').append(buildBan(champ, i));
 	}
 
@@ -51,7 +51,7 @@ function initialize(){
 }
 
 function buildSquare(champ){
-	return $('<img class="champ">').attr("src", "images/" + game + "/square/" + champ + ".png").attr('data-champ', champ).click(pick);
+	return $('<img>').attr("src", "images/" + game + "/square/" + champ + ".png");
 }
 
 function buildBan(champ, index){
@@ -103,6 +103,7 @@ function start(){
 		'pruning': $("#pruning").slider( "option", "value" )
 	}
 
+	$('#division').val('bronze');
 	var network = networks[game][$('#division').val()].network;
 
 	process(data, network, showResult);
@@ -115,9 +116,23 @@ function stop(){
 	$("#stop").attr("disabled",'');
 }
 
-// {blueTeam: Array[int], redTeam: Array[int], score: float, popularity: float} result
 function buildResult(result){
-	return $('<div>');
+	var teams = $('<div class="result-teams">').append(buildResultTeam(result.blueTeam)).append(buildResultTeam(result.redTeam));
+	var scores = $('<div class="result-scores">').append(buildResultPercentage(result.score)).append(buildResultPercentage(result.popularity));
+	return $('<div class="result">').append(teams).append(scores);
+}
+
+function buildResultTeam(indices){
+	var team = $('<div class="result-team">');
+	for(var index of indices){
+		buildSquare(games[game].champs[index]).appendTo(team);
+	}
+	return team;
+}
+
+function buildResultPercentage(f){
+	var percentage = (f*100).toFixed(2) + '%';
+	return $('<div class="result-percentage">').text(percentage);
 }
 
 function showResult(result, index, overflow){
