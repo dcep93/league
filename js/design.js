@@ -40,7 +40,8 @@ function initialize(){
 		$(this).slider({
 			'min': range[0],
 			'max': range[1],
-			'value': range[0]
+			'value': range[0],
+			'change': stop
 		});
 		for(var i=range[0]; i <= range[1]; i += range[2]){
 			$('<label>').text(i).css('left', (i-range[0])/(range[1]-range[0])*100 + '%').appendTo($(this));
@@ -94,6 +95,7 @@ function start(){
 	$("#start").attr("disabled",'');
 
 	data = {
+		'max': ($('#team').val() == "blue"),
 		'blueTeam': getTeam('#blue-team'),
 		'redTeam': getTeam('#red-team'),
 		'bans': $("#bans").multipleSelect("getSelects"),
@@ -107,8 +109,6 @@ function start(){
 	var network = networks[game][$('#division').val()].network;
 
 	process(data, network, showResult);
-
-	stop();
 }
 
 function stop(){
@@ -118,7 +118,7 @@ function stop(){
 
 function buildResult(result){
 	var teams = $('<div class="result-teams">').append(buildResultTeam(result.blueTeam)).append(buildResultTeam(result.redTeam));
-	var scores = $('<div class="result-scores">').append(buildResultPercentage(result.score)).append(buildResultPercentage(result.popularity));
+	var scores = $('<div class="result-scores">').append(buildResultPercentage(result.score, 'Odds of Blue Winning')).append(buildResultPercentage(result.popularity, 'Popularity'));
 	return $('<div class="result">').append(teams).append(scores);
 }
 
@@ -130,17 +130,24 @@ function buildResultTeam(indices){
 	return team;
 }
 
-function buildResultPercentage(f){
+function buildResultPercentage(f, text){
 	var percentage = (f*100).toFixed(2) + '%';
-	return $('<div class="result-percentage">').text(percentage);
+	return $('<div class="result-percentage">').text(text + ': ' + percentage);
 }
 
 function showResult(result, index, overflow){
-	var results = $('#results');
+	var resultsContainer = $('#results-container');
 
-	buildResult(result).insertAfter(results.eq(index));
+	var builtResult = buildResult(result);
+
+	if(index === 0){
+		builtResult.prependTo(resultsContainer);
+	}
+	else{
+		builtResult.insertAfter(resultsContainer.children().eq(index-1));
+	}
 
 	if(overflow){
-		results.last().remove();
+		resultsContainer.last().remove();
 	}
 }

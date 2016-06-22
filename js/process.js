@@ -1,4 +1,5 @@
 // Array data = {
+//  'max': bool
 // 	'blueTeam': Array[int],
 // 	'redTeam': Array[int],
 // 	'bans': Array[int],
@@ -18,4 +19,12 @@ function process(data, network, showResult){
 		'score': 0.1337,
 		'popularity': 0.69
 	}, 0, false);
+
+
+	showResult({
+		'blueTeam': [25,6,4],
+		'redTeam': [0,46,2],
+		'score': 0.3,
+		'popularity': 0.7
+	}, 1, false);
 }
