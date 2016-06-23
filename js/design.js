@@ -126,6 +126,8 @@ function stop(){
 	$("#stop").attr("disabled",'');
 }
 
+//TODO
+//fix this please...
 function buildResult(result){
 	var teams = $('<div class="result-teams">').append(buildResultTeam(result.blueTeam)).append(buildResultTeam(result.redTeam));
 	var scores = $('<div class="result-scores">').append(buildResultPercentage(result.score, 'Odds of Blue Winning')).append(buildResultPercentage(result.popularity, 'Popularity'));

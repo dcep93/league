@@ -3,7 +3,6 @@
 //enable functionality while processing
 
 function process(blueTeam, redTeam, picks, args){
-	console.log(picks);
 	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+args.numChamps }));
 
 	var shownResults = [];
@@ -97,7 +96,7 @@ function multiScore(teams, network){
 	function random(compress) {
 		var r = Math.random();
 		if(compress){
-			var n = 2;
+			var n = 10;
 			var x = (2 * r - 1) * Math.tanh(n);
 			var t = Math.atanh(x) / n;
 			return (t+1)/2;
