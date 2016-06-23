@@ -91,24 +91,34 @@ function getTeam(team){
 }
 
 function start(){
+	$('#results-container').empty();
+
 	$("#stop").removeAttr("disabled");
 	$("#start").attr("disabled",'');
 
-	data = {
-		'max': ($('#team').val() == "blue"),
-		'blueTeam': getTeam('#blue-team'),
-		'redTeam': getTeam('#red-team'),
+	var blueTeam = getTeam('#blue-team');
+	var redTeam = getTeam('#red-team');
+
+	var numChosen = blueTeam.length + redTeam.length;
+
+	var picks = games[game].order.slice(numChosen, numChosen + $("#depth").slider( "option", "value" ));
+
+	var args = {
+		'blueUser': ($('#team').val() == "blue"),
 		'bans': $("#bans").multipleSelect("getSelects"),
 		'selfBans': $("#self-bans").multipleSelect("getSelects"),
-		'depth': $("#depth").slider( "option", "value" ),
 		'memory': $("#memory").slider( "option", "value" ),
-		'pruning': $("#pruning").slider( "option", "value" )
+		'pruning': $("#pruning").slider( "option", "value" ),
+		//TODO
+		// 'networks': ALL_NETWORKS[game][$('#division').val()].networks,
+		'networks': ALL_NETWORKS[game]['bronze'].networks,
+		'showResult': showResult,
+		'numChamps': games[game].champs.length
 	}
 
-	$('#division').val('bronze');
-	var network = networks[game][$('#division').val()].network;
+	process(blueTeam, redTeam, picks, args);
 
-	process(data, network, showResult);
+	stop();
 }
 
 function stop(){
@@ -138,16 +148,16 @@ function buildResultPercentage(f, text){
 function showResult(result, index, overflow){
 	var resultsContainer = $('#results-container');
 
-	var builtResult = buildResult(result);
+	builtResult = buildResult(result);
+
+	if(overflow){
+		resultsContainer.children().last().remove();
+	}
 
 	if(index === 0){
 		builtResult.prependTo(resultsContainer);
 	}
 	else{
 		builtResult.insertAfter(resultsContainer.children().eq(index-1));
-	}
-
-	if(overflow){
-		resultsContainer.last().remove();
 	}
 }

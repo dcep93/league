@@ -1,30 +1,119 @@
-// Array data = {
-//  'max': bool
-// 	'blueTeam': Array[int],
-// 	'redTeam': Array[int],
-// 	'bans': Array[int],
-// 	'selfBans': Array[int],
-// 	'depth': int,
-// 	'memory': int,
-// 	'pruning': float
-// }
-//
+//TODO
+//add killswitch
+//enable functionality while processing
+
+function process(blueTeam, redTeam, picks, args){
+	console.log(picks);
+	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+args.numChamps }));
+
+	var shownResults = [];
+
+	processHelper(currentTeam, picks, shownResults, args);
+}
+
+function processHelper(currentTeam, picks, shownResults, args){
+	var teams = buildTeams(currentTeam, picks, args);
+	if(picks.length == 1){
+		var network = args.networks[currentTeam.length];
+		var results = multiScore(teams, network);
+		for(var result of results){
+			handle(result, shownResults, args);
+		}
+	}
+	else{
+		for(var team of teams){
+			processHelper(team, picks.slice(1), shownResults, args);
+		}
+	}
+}
+
+function includeScore(score, shownResultScore, blueUser){
+	var m = blueUser ? 1 : -1;
+	return (score * m) > (shownResultScore * m);
+}
+
+//TODO
+//make it faster...
+function handle(result, shownResults, args){
+	for(var i=0;i<shownResults.length;i++){
+		if(includeScore(result.score, shownResults[i], args.blueUser)){
+			shownResults.splice(i, 0, result.score);
+			overflow = shownResults.length > args.memory;
+			if(overflow){
+				shownResults.pop();
+			}
+			showResultHelper(result, args, i, overflow);
+			return;
+		}
+	}
+	if(shownResults.length < args.memory){
+		showResultHelper(result, args, shownResults.length, false);
+		shownResults.push(result.score);
+	}
+}
+
+function showResultHelper(result, args, index, overflow){
+	var blueTeam = [];
+	var redTeam = [];
+	for(var champ of result.team){
+		if(champ < args.numChamps){
+			blueTeam.push(champ);
+		}
+		else{
+			redTeam.push(champ-args.numChamps);
+		}
+	}
+	showResult({
+		'blueTeam': blueTeam,
+		'redTeam': redTeam,
+		'score': result.score,
+		'popularity': result.popularity
+	}, index, overflow);
+}
+
+//TODO
+//dont build teams below the pruning cutoff
+function buildTeams(currentTeam, picks, args){
+	var champ;
+
+	var teams = [];
+	for(var i=0;i<args.numChamps;i++){
+		champ = picks[0] == "blue" ? i : i + args.numChamps;
+		if (currentTeam.indexOf(champ) == -1){
+			if (args.bans.indexOf(i) == -1 && (args.blueUser == (picks[0] == "blue") || args.selfBans.indexOf(i) == -1)) {
+				teams.push(currentTeam.concat(champ));
+			}
+		}
+	}
+	return teams;
+}
+
+// Array[Array[int]] teams array of sparce vectors
 // Array[Array[Array[float]]] network (array of matrices)
-// function showResult({blueTeam: Array[int], redTeam: Array[int], score: float[0,1], popularity: float[0,1]} result, int index, bool overflow);
+// returns Array[Array[2 float[0,1]]] with same # of rows as teams array, 2 cols (score, popularity)
+//TODO
+//make it work...
+function multiScore(teams, network){
+	function random(compress) {
+		var r = Math.random();
+		if(compress){
+			var n = 2;
+			var x = (2 * r - 1) * Math.tanh(n);
+			var t = Math.atanh(x) / n;
+			return (t+1)/2;
+		}
+		else{
+			return r;
+		}
+	}
 
-function process(data, network, showResult){
-	showResult({
-		'blueTeam': [7,14,93],
-		'redTeam': [11,4,96],
-		'score': 0.1337,
-		'popularity': 0.69
-	}, 0, false);
-
-
-	showResult({
-		'blueTeam': [25,6,4],
-		'redTeam': [0,46,2],
-		'score': 0.3,
-		'popularity': 0.7
-	}, 1, false);
+	var results = [];
+	for(var team of teams){
+		results.push({
+			'team': team,
+			'score': random(true),
+			'popularity': random(false)
+		});
+	}
+	return results;
 }

@@ -1,10 +1,10 @@
-var networks = {};
+var ALL_NETWORKS = {};
 
 for(var game in games){
-	networks[game] = {};
+	ALL_NETWORKS[game] = {};
 	for(var division in games[game].divisions){
 		$.getJSON('networks/'+game+'/'+division+'.json', function(json){
-			networks[json.game][json.division] = json;
+			ALL_NETWORKS[json.game][json.division] = json;
 		});
 	}
 }

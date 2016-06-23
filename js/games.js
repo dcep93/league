@@ -135,6 +135,8 @@ games = {
 			"Zyra"
 		],
 
+		//TODO
+		//change to array of bools
 		'order': ["blue", "red", "red", "blue", "blue", "red", "red", "blue", "blue", "red"],
 
 		'divisions': {

@@ -1,5 +1,6 @@
 {
 	"game": "league",
 	"division": "bronze",
-	"network": []
+	"networks": {
+	}
 }
