@@ -1,3 +1,5 @@
+var games = {};
+
 var game;
 
 $(document).ready(function(){
