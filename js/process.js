@@ -11,7 +11,7 @@ function process(blueTeam, redTeam, picks, args){
 }
 
 function processHelper(currentTeam, picks, shownResults, args){
-	var teams = buildTeams(currentTeam, picks, args);
+	var teams = buildTeams(currentTeam, picks[0], args);
 	if(picks.length == 1){
 		var network = args.networks[currentTeam.length];
 		var results = multiScore(teams, network);
@@ -72,14 +72,14 @@ function showResultHelper(result, args, index, overflow){
 
 //TODO
 //dont build teams below the pruning cutoff
-function buildTeams(currentTeam, picks, args){
+function buildTeams(currentTeam, pick, args){
 	var champ;
 
 	var teams = [];
 	for(var i=0;i<args.numChamps;i++){
-		champ = picks[0] == "blue" ? i : i + args.numChamps;
+		champ = picks[0] ? i : i + args.numChamps;
 		if (currentTeam.indexOf(champ) == -1){
-			if (args.bans.indexOf(i) == -1 && (args.blueUser == (picks[0] == "blue") || args.selfBans.indexOf(i) == -1)) {
+			if (args.bans.indexOf(i) == -1 && (args.blueUser != pick || args.selfBans.indexOf(i) == -1)) {
 				teams.push(currentTeam.concat(champ));
 			}
 		}

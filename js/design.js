@@ -66,8 +66,9 @@ function buildSplash(champ){
 }
 
 function getPick(index){
-	var team = games[game].order[index];
-	var n = games[game].order.slice(0,index).reduce(function(n, t) { return n + (t === team) }, 0);
+	var blueTurn = games[game].order[index];
+	var n = games[game].order.slice(0,index).reduce(function(n, t) { return n + (t === blueTurn) }, 0);
+	var team = blueTurn ? "blue" : "red";
 	return $("#" + team + "-team .pick").eq(n);
 }
 
