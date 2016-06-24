@@ -1,3 +1,5 @@
+//TODO
+//move to networks repo so we NEVER have to change league repo except to update submodule
 games = {
 	'league': {
 
