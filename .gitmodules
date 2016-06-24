@@ -4,3 +4,6 @@
 [submodule "images"]
 	path = images
 	url = https://github.com/dcep93/league_images
+[submodule "networks"]
+	path = networks
+	url = https://github.com/dcep93/league_networks.git
