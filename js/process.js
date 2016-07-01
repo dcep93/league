@@ -77,7 +77,7 @@ function buildTeams(currentTeam, pick, args){
 
 	var teams = [];
 	for(var i=0;i<args.numChamps;i++){
-		champ = picks[0] ? i : i + args.numChamps;
+		champ = pick ? i : i + args.numChamps;
 		if (currentTeam.indexOf(champ) == -1){
 			if (args.bans.indexOf(i) == -1 && (args.blueUser != pick || args.selfBans.indexOf(i) == -1)) {
 				teams.push(currentTeam.concat(champ));
