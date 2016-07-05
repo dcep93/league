@@ -75,7 +75,7 @@ html, body, #background {
 }
 
 #controls > * {
-	margin: 40px;
+	padding: 40px;
 }
 
 .bans {
@@ -83,7 +83,7 @@ html, body, #background {
 }
 
 #slider-div {
-	flex-grow: 1;
+	min-width: 300px;
 }
 
 #slider-div > * {
@@ -98,6 +98,10 @@ html, body, #background {
   position: absolute;
   margin-top: 20px;
   transform: translate(-50%, 0);
+}
+
+#status-div {
+	white-space: nowrap;
 }
 
 #results {
