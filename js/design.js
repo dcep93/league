@@ -95,7 +95,6 @@ function getTeam(team){
 }
 
 function start(){
-	console.log('hi');
 	$('#results-container').empty();
 
 	$("#stop").removeAttr("disabled");
