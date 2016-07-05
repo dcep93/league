@@ -52,6 +52,9 @@ function initialize(){
 	});
 
 	$('#pruning label').text(function(){ return $(this).text() + '%'});
+
+	$("#start").click(start);
+	$("#stop").click(stop);
 }
 
 function buildSquare(champ){

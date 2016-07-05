@@ -62,7 +62,7 @@ function showResultHelper(result, args, index, overflow){
 			redTeam.push(champ-args.numChamps);
 		}
 	}
-	showResult({
+	args.showResult({
 		'blueTeam': blueTeam,
 		'redTeam': redTeam,
 		'score': result.score,
