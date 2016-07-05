@@ -1,4 +1,12 @@
-function loadNetworks(games, ALL_NETWORKS, initialize){
+var loadNetworks;
+
+(function(){
+
+loadNetworks = function(){
+	loadNetworksMask.apply(this, arguments);
+}
+
+function loadNetworksMask(games, ALL_NETWORKS, initialize){
 	function doneLoadingGames(games){
 		for(var game in games){
 			if(games[game] === null){
@@ -24,3 +32,5 @@ function loadNetworks(games, ALL_NETWORKS, initialize){
 		});
 	}
 }
+
+})();

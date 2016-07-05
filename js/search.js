@@ -1,16 +1,22 @@
+var search;
+
+(function(){
+search = function(){
+	searchMask.apply(this, arguments);
+}
+
 //TODO
 //add killswitch
 //enable functionality while processing
-
-function process(blueTeam, redTeam, picks, args){
+function searchMask(blueTeam, redTeam, picks, args){
 	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+args.numChamps }));
-
-	var shownResults = [];
-
-	processHelper(currentTeam, picks, shownResults, args);
+	searchHelper(currentTeam, picks, args, []);
 }
 
-function processHelper(currentTeam, picks, shownResults, args){
+
+//TODO
+//fix broken logic
+function searchHelper(currentTeam, picks, args, shownResults){
 	var teams = buildTeams(currentTeam, picks[0], args);
 	if(picks.length == 1){
 		var network = args.networks[currentTeam.length];
@@ -21,7 +27,7 @@ function processHelper(currentTeam, picks, shownResults, args){
 	}
 	else{
 		for(var team of teams){
-			processHelper(team, picks.slice(1), shownResults, args);
+			searchHelper(team, picks.slice(1), args, shownResults);
 		}
 	}
 }
@@ -32,7 +38,7 @@ function includeScore(score, shownResultScore, blueUser){
 }
 
 //TODO
-//make it faster...
+//make it faster... (using binary search (starting from the end!!!))
 function handle(result, shownResults, args){
 	for(var i=0;i<shownResults.length;i++){
 		if(includeScore(result.score, shownResults[i], args.blueUser)){
@@ -117,3 +123,4 @@ function multiScore(teams, network){
 	}
 	return results;
 }
+})();

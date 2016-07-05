@@ -17,12 +17,12 @@ function initialize(){
 		$('<div class="pick">').appendTo('.picks');
 	}
 
-	$("#champ-pool").empty().append($('<img class="champ">').attr("src", "images/shared/undo.png").click(undo));
+	$("#champ-pool").empty().append(buildSquare("../../shared/undo").click(undo));
 	$('.bans').empty();
 
 	for(var i=0;i<games[game].champs.length;i++){
 		var champ = games[game].champs[i];
-		buildSquare(champ).addClass('champ').attr('data-champ', champ).click(pick).appendTo('#champ-pool');
+		buildSquare(champ).attr('data-champ', champ).click(pick).appendTo('#champ-pool');
 		$('.bans').append(buildBan(champ, i));
 	}
 
@@ -57,7 +57,7 @@ function initialize(){
 }
 
 function buildSquare(champ){
-	return $('<img>').attr("src", "images/" + game + "/square/" + champ + ".png");
+	return $('<img class="champ">').attr("src", "images/" + game + "/square/" + champ + ".png");
 }
 
 function buildBan(champ, index){
@@ -119,17 +119,21 @@ function start(){
 		// 'networks': ALL_NETWORKS[game][$('#division').val()].networks,
 		'networks': ALL_NETWORKS[game]['bronze'].networks,
 		'showResult': showResult,
-		'numChamps': games[game].champs.length
+		'numChamps': games[game].champs.length,
+		'stop': stop,
+		'resume': resume
 	}
 
-	process(blueTeam, redTeam, picks, args);
-
-	stop();
+	search(blueTeam, redTeam, picks, args);
 }
 
 function stop(){
 	$("#start").removeAttr("disabled");
 	$("#stop").attr("disabled",'');
+}
+
+function resume(){
+	return true;
 }
 
 function buildResult(result){
