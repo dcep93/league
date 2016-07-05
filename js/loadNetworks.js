@@ -1,4 +1,12 @@
 function loadNetworks(games, ALL_NETWORKS, initialize){
+	function doneLoadingGames(games){
+		for(var game in games){
+			if(games[game] === null){
+				return false;
+			}
+		}
+		return true;
+	}
 	for(var game in games){
 		$.getJSON('networks/'+game+'/info.json', function(info){
 			games[info.game] = info;
@@ -15,13 +23,4 @@ function loadNetworks(games, ALL_NETWORKS, initialize){
 			}
 		});
 	}
-}
-
-function doneLoadingGames(games){
-	for(var game in games){
-		if(games[game] === null){
-			return false;
-		}
-	}
-	return true;
 }

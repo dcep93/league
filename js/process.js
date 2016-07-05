@@ -65,7 +65,7 @@ function showResultHelper(result, args, index, overflow){
 	args.showResult({
 		'blueTeam': blueTeam,
 		'redTeam': redTeam,
-		'score': result.score,
+		'score': args.blueUser ? result.score : 1-result.score,
 		'popularity': result.popularity
 	}, index, overflow);
 }

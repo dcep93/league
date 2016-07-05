@@ -39,7 +39,7 @@
 				<h3>Division:</h3>
 				<select id="division" onchange="stop()"></select>
 				<h3>Team:</h3>
-				<select id="team" onchange="stop()">
+				<select id="team">
 					<option value="blue">Blue</option>
 					<option value="red">Red</option>
 				</select>
@@ -59,15 +59,15 @@
 			<div id="slider-div">
 				<div>
 					<h3>Depth</h3>
-					<div id="depth" class="slider" data-range="1,10,1" onchange="stop()"></div>
+					<div id="depth" class="slider" data-range="1,10,1"></div>
 				</div>
 				<div>
 					<h3>Memory</h3>
-					<div id="memory" class="slider" data-range="10,100,10" onchange="stop()"></div>
+					<div id="memory" class="slider" data-range="10,100,10"></div>
 				</div>
 				<div>
 					<h3>Pruning Factor</h3>
-					<div id="pruning" class="slider" data-range="0,100,25" onchange="stop()"></div>
+					<div id="pruning" class="slider" data-range="0,100,25" modifier="%"></div>
 				</div>
 			</div>
 

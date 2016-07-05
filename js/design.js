@@ -40,6 +40,7 @@ function initialize(){
 
 	$('.slider').each(function(){
 		var range = $(this).attr('data-range').split(',').map(Number);
+		var modifier = $(this).attr('modifier') || "";
 		$(this).slider({
 			'min': range[0],
 			'max': range[1],
@@ -47,11 +48,9 @@ function initialize(){
 			'change': stop
 		});
 		for(var i=range[0]; i <= range[1]; i += range[2]){
-			$('<label>').text(i).css('left', (i-range[0])/(range[1]-range[0])*100 + '%').appendTo($(this));
+			$('<label>').text(i+modifier).css('left', (i-range[0])/(range[1]-range[0])*100 + '%').appendTo($(this));
 		}
 	});
-
-	$('#pruning label').text(function(){ return $(this).text() + '%'});
 
 	$("#start").click(start);
 	$("#stop").click(stop);
