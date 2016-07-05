@@ -1,13 +1,14 @@
-var games = {};
+(function() {
 
+var games = {
+	'league': null,
+}
 var game;
-
-$(document).ready(function(){
-	game = 'league';
-	initialize();
-});
+var ALL_NETWORKS = {};
 
 function initialize(){
+	game = 'league';
+	
 	$('.picks').empty();
 
 	var numPicks = games[game].order.length / 2;
@@ -94,6 +95,7 @@ function getTeam(team){
 }
 
 function start(){
+	console.log('hi');
 	$('#results-container').empty();
 
 	$("#stop").removeAttr("disabled");
@@ -129,11 +131,9 @@ function stop(){
 	$("#stop").attr("disabled",'');
 }
 
-//TODO
-//fix this please...
 function buildResult(result){
 	var teams = $('<div class="result-teams">').append(buildResultTeam(result.blueTeam)).append(buildResultTeam(result.redTeam));
-	var scores = $('<div class="result-scores">').append(buildResultPercentage(result.score, 'Odds of Blue Winning')).append(buildResultPercentage(result.popularity, 'Popularity'));
+	var scores = $('<div class="result-scores">').append(buildResultPercentage(result.score, 'Odds of Winning')).append(buildResultPercentage(result.popularity, 'Popularity'));
 	return $('<div class="result">').append(teams).append(scores);
 }
 
@@ -166,3 +166,9 @@ function showResult(result, index, overflow){
 		builtResult.insertAfter(resultsContainer.children().eq(index-1));
 	}
 }
+
+$(document).ready(function(){
+	loadNetworks(games, ALL_NETWORKS, initialize);
+});
+
+})();

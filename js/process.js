@@ -72,6 +72,7 @@ function showResultHelper(result, args, index, overflow){
 
 //TODO
 //dont build teams below the pruning cutoff
+//if double, build double
 function buildTeams(currentTeam, pick, args){
 	var champ;
 
