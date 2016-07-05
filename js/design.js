@@ -115,7 +115,7 @@ function start(){
 		'selfBans': $("#self-bans").multipleSelect("getSelects"),
 		'memory': $("#memory").slider( "option", "value" ),
 		'pruning': $("#pruning").slider( "option", "value" ),
-		//TODO
+		//TODO - ALL_NETWORKS[game][$('#division').val()].networks
 		// 'networks': ALL_NETWORKS[game][$('#division').val()].networks,
 		'networks': ALL_NETWORKS[game]['bronze'].networks,
 		'showResult': showResult,

@@ -5,17 +5,15 @@ search = function(){
 	searchMask.apply(this, arguments);
 }
 
-//TODO
-//add killswitch
-//enable functionality while processing
+//TODO add killswitch
+//TODO enable functionality while processing
 function searchMask(blueTeam, redTeam, picks, args){
 	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+args.numChamps }));
 	searchHelper(currentTeam, picks, args, []);
 }
 
 
-//TODO
-//fix broken logic
+//TODO fix broken logic
 function searchHelper(currentTeam, picks, args, shownResults){
 	var teams = buildTeams(currentTeam, picks[0], args);
 	if(picks.length == 1){
@@ -37,8 +35,7 @@ function includeScore(score, shownResultScore, blueUser){
 	return (score * m) > (shownResultScore * m);
 }
 
-//TODO
-//make it faster... (using binary search (starting from the end!!!))
+//TODO make it faster... (using binary search (starting from the end!!!))
 function handle(result, shownResults, args){
 	for(var i=0;i<shownResults.length;i++){
 		if(includeScore(result.score, shownResults[i], args.blueUser)){
@@ -76,9 +73,8 @@ function showResultHelper(result, args, index, overflow){
 	}, index, overflow);
 }
 
-//TODO
-//dont build teams below the pruning cutoff
-//if double, build double
+//TODO dont build teams below the pruning cutoff
+//TODO if double, build double
 function buildTeams(currentTeam, pick, args){
 	var champ;
 
@@ -97,8 +93,7 @@ function buildTeams(currentTeam, pick, args){
 // Array[Array[int]] teams array of sparce vectors
 // Array[Array[Array[float]]] network (array of matrices)
 // returns Array[Array[2 float[0,1]]] with same # of rows as teams array, 2 cols (score, popularity)
-//TODO
-//make it work...
+//TODO make it work...
 function multiScore(teams, network){
 	function random(compress) {
 		var r = Math.random();
