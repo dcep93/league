@@ -9,24 +9,43 @@ search = function(){
 //TODO enable functionality while processing
 function searchMask(blueTeam, redTeam, picks, args){
 	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+args.numChamps }));
-	searchHelper(currentTeam, picks, args, []);
+	searchHelper(currentTeam, picks, args, true, []);
 }
 
-
-//TODO fix broken logic
-function searchHelper(currentTeam, picks, args, shownResults){
-	var teams = buildTeams(currentTeam, picks[0], args);
-	if(picks.length == 1){
-		var network = args.networks[currentTeam.length];
-		var results = multiScore(teams, network);
-		for(var result of results){
-			handle(result, shownResults, args);
-		}
+function searchHelper(currentTeam, picks, args, toHandle, shownResults){
+	var userPick = (picks[0] == args.blueUser);
+	var memory;
+	if(userPick){
+		memory = args.memory;
 	}
 	else{
-		for(var team of teams){
-			searchHelper(team, picks.slice(1), args, shownResults);
+		memory = 1;
+	}
+
+	var teams = buildTeams(currentTeam, picks, args);
+
+	if(picks.length == 0){
+		var network = args.networks[currentTeam.length];
+		results = multiScore(teams, network);
+
+		for(var result of results){
+			handle(result, shownResults, userPick, memory, toHandle, args);
 		}
+
+		return results;
+	}
+	else{
+		var rToHandle = userPick && toHandle;
+		toHandle = toHandle && !rToHandle;
+		var teamResults;
+		results = [];
+		for(var team of teams){
+			teamResults = searchHelper(team, picks.slice(), args, rToHandle);
+			for(var result of teamResults){
+				handle(result, shownResults, userPick, memory, toHandle, args);
+			}
+		}
+		return results;
 	}
 }
 
@@ -36,20 +55,24 @@ function includeScore(score, shownResultScore, blueUser){
 }
 
 //TODO make it faster... (using binary search (starting from the end!!!))
-function handle(result, shownResults, args){
+function handle(result, shownResults, userPick, memory, toHandle, args){
 	for(var i=0;i<shownResults.length;i++){
 		if(includeScore(result.score, shownResults[i], args.blueUser)){
 			shownResults.splice(i, 0, result.score);
-			overflow = shownResults.length > args.memory;
+			overflow = shownResults.length > memory;
 			if(overflow){
 				shownResults.pop();
 			}
-			showResultHelper(result, args, i, overflow);
+			if(toHandle){
+				showResultHelper(result, args, i, overflow);
+			}
 			return;
 		}
 	}
-	if(shownResults.length < args.memory){
-		showResultHelper(result, args, shownResults.length, false);
+	if(shownResults.length < memory){
+		if(toHandle){
+			showResultHelper(result, args, shownResults.length, false);
+		}
 		shownResults.push(result.score);
 	}
 }
@@ -75,7 +98,8 @@ function showResultHelper(result, args, index, overflow){
 
 //TODO dont build teams below the pruning cutoff
 //TODO if double, build double
-function buildTeams(currentTeam, pick, args){
+function buildTeams(currentTeam, picks, args){
+	var pick = picks.shift();
 	var champ;
 
 	var teams = [];
