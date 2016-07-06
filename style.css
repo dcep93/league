@@ -61,7 +61,7 @@ html, body, #background {
 	flex-wrap: wrap;
 }
 
-.champ {
+#champ-pool .champ {
 	height: 60px;
 	width: 60px;
 	margin: 15px;
