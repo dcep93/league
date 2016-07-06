@@ -52,8 +52,22 @@ function initialize(){
 		}
 	});
 
+	animateChampPool();
+
 	$("#start").click(start);
 	$("#stop").click(stop);
+}
+
+function animateChampPool(){
+	$("#champ-pool-container").css("width", 0);
+	setTimeout(function(){
+		$("#champ-pool-container").css("width", "");
+		var width = $("#champ-pool-container").css("width");
+		$("#champ-pool").css({"width": width, "transform": "translateX(-50%)", "left": "50%", "position": "relative"});
+		$("#champ-pool-container").css("width", 0).animate({"width": width}, 700, "swing", function(){
+			$("#champ-pool").css({"width": "", "transform": "", "left": "", "position": ""});
+		});
+	}, 1000)
 }
 
 function buildSquare(champ){
