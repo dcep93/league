@@ -1,5 +1,8 @@
 var search;
 
+//TODO 10 fuck it, show everything only at the end
+//TODO 9 use strict everywhere
+
 (function(){
 search = function(){
 	searchMask.apply(this, arguments);
@@ -31,8 +34,10 @@ function searchHelper(currentTeam, picks, args, toHandle, shownResults){
 	}
 	else{
 		var teamResults;
+		// TODO 8 figure out wtf this is
 		results = [];
 		for(var team of teams){
+			// TODO 7 handle 2nd tier if his turn then your turn
 			teamResults = searchHelper(team, picks.slice(), args, false, shownResults);
 			for(var result of teamResults){
 				handle(result, shownResults, userPick, memory, toHandle, args);
@@ -89,31 +94,44 @@ function showResultHelper(result, args, index, overflow){
 	}, index, overflow);
 }
 
+function canPickChamp(i, team, pick, args) {
+	if ((team.indexOf(i) === -1) && team.indexOf(i + args.numChamps) === -1) {
+		if ((args.bans.indexOf(i) === -1) && (args.blueUser !== pick || args.selfBans.indexOf(i) === -1)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 //TODO 4 dont build teams below the pruning cutoff
 //TODO 5 if double, build double
+//TODO 6 dont let same champ on both teams
 function buildTeams(currentTeam, picks, args){
 	var pick = picks.shift();
 
 	var teams = [];
 
-	if (false && pick === picks[0]) {
+	if (pick === picks[0]) {
 		picks.shift();
 		var champ1;
 		var champ2;
 		for(var i=0;i<args.numChamps-1;i++){
-			for(var j=i+1;j<args.numChamps;j++){
-				champ1 = pick ? i : i + args.numChamps;
-				champ2 = pick ? j : j + args.numChamps;
+			if (canPickChamp(i, currentTeam, pick, args)) {
+				for(var j=i+1;j<args.numChamps;j++){
+					if (canPickChamp(j, currentTeam, pick, args)) {
+						champ1 = pick ? i : i + args.numChamps;
+						champ2 = pick ? j : j + args.numChamps;
+						teams.push(currentTeam.concat(champ1).concat(champ2));
+					}
+				}
 			}
 		}
 	} else {
 		var champ;
 		for(var i=0;i<args.numChamps;i++){
-			champ = pick ? i : i + args.numChamps;
-			if (currentTeam.indexOf(champ) === -1){
-				if (args.bans.indexOf(i) === -1 && (args.blueUser !== pick || args.selfBans.indexOf(i) === -1)) {
-					teams.push(currentTeam.concat(champ));
-				}
+			if (canPickChamp(i, currentTeam, pick, args)) {
+				champ = pick ? i : i + args.numChamps;
+				teams.push(currentTeam.concat(champ));
 			}
 		}
 	}

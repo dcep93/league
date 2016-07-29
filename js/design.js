@@ -142,6 +142,7 @@ function start(){
 function stop(){
 	$("#start").removeAttr("disabled");
 	$("#stop").attr("disabled",'');
+	console.log('stop')
 }
 
 function resume(){
@@ -170,9 +171,7 @@ function buildResultPercentage(f, text){
 function showResult(result, index, overflow){
 	var resultsContainer = $('#results-container');
 
-	builtResult = buildResult(result);
-
-	console.log(resultsContainer)
+	var builtResult = buildResult(result);
 
 	if(overflow){
 		resultsContainer.children().last().remove();
