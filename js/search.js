@@ -5,26 +5,21 @@ search = function(){
 	searchMask.apply(this, arguments);
 }
 
-//TODO add killswitch
-//TODO enable functionality while processing
+//TODO 1 add killswitch
+//TODO 2 enable functionality while processing
 function searchMask(blueTeam, redTeam, picks, args){
 	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+args.numChamps }));
 	searchHelper(currentTeam, picks, args, true, []);
+	args.stop();
 }
 
 function searchHelper(currentTeam, picks, args, toHandle, shownResults){
-	var userPick = (picks[0] == args.blueUser);
-	var memory;
-	if(userPick){
-		memory = args.memory;
-	}
-	else{
-		memory = 1;
-	}
+	var userPick = (picks[0] === args.blueUser);
+	var memory = userPick ? args.memory : 1;
 
 	var teams = buildTeams(currentTeam, picks, args);
 
-	if(picks.length == 0){
+	if(picks.length === 0){
 		var network = args.networks[currentTeam.length];
 		results = multiScore(teams, network);
 
@@ -35,12 +30,10 @@ function searchHelper(currentTeam, picks, args, toHandle, shownResults){
 		return results;
 	}
 	else{
-		var rToHandle = userPick && toHandle;
-		toHandle = toHandle && !rToHandle;
 		var teamResults;
 		results = [];
 		for(var team of teams){
-			teamResults = searchHelper(team, picks.slice(), args, rToHandle);
+			teamResults = searchHelper(team, picks.slice(), args, false, shownResults);
 			for(var result of teamResults){
 				handle(result, shownResults, userPick, memory, toHandle, args);
 			}
@@ -54,7 +47,7 @@ function includeScore(score, shownResultScore, blueUser){
 	return (score * m) > (shownResultScore * m);
 }
 
-//TODO make it faster... (using binary search (starting from the end!!!))
+//TODO 3 make it faster... (using binary search (starting from the end!!!))
 function handle(result, shownResults, userPick, memory, toHandle, args){
 	for(var i=0;i<shownResults.length;i++){
 		if(includeScore(result.score, shownResults[i], args.blueUser)){
@@ -96,18 +89,31 @@ function showResultHelper(result, args, index, overflow){
 	}, index, overflow);
 }
 
-//TODO dont build teams below the pruning cutoff
-//TODO if double, build double
+//TODO 4 dont build teams below the pruning cutoff
+//TODO 5 if double, build double
 function buildTeams(currentTeam, picks, args){
 	var pick = picks.shift();
-	var champ;
 
 	var teams = [];
-	for(var i=0;i<args.numChamps;i++){
-		champ = pick ? i : i + args.numChamps;
-		if (currentTeam.indexOf(champ) == -1){
-			if (args.bans.indexOf(i) == -1 && (args.blueUser != pick || args.selfBans.indexOf(i) == -1)) {
-				teams.push(currentTeam.concat(champ));
+
+	if (false && pick === picks[0]) {
+		picks.shift();
+		var champ1;
+		var champ2;
+		for(var i=0;i<args.numChamps-1;i++){
+			for(var j=i+1;j<args.numChamps;j++){
+				champ1 = pick ? i : i + args.numChamps;
+				champ2 = pick ? j : j + args.numChamps;
+			}
+		}
+	} else {
+		var champ;
+		for(var i=0;i<args.numChamps;i++){
+			champ = pick ? i : i + args.numChamps;
+			if (currentTeam.indexOf(champ) === -1){
+				if (args.bans.indexOf(i) === -1 && (args.blueUser !== pick || args.selfBans.indexOf(i) === -1)) {
+					teams.push(currentTeam.concat(champ));
+				}
 			}
 		}
 	}
@@ -117,7 +123,7 @@ function buildTeams(currentTeam, picks, args){
 // Array[Array[int]] teams array of sparce vectors
 // Array[Array[Array[float]]] network (array of matrices)
 // returns Array[Array[2 float[0,1]]] with same # of rows as teams array, 2 cols (score, popularity)
-//TODO make it work...
+//TODO 0 make it work...
 function multiScore(teams, network){
 	function random(compress) {
 		var r = Math.random();

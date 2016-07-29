@@ -93,7 +93,7 @@ function pick(){
 	var splashes = $('.splash');
 	if(games[game].order.length > splashes.length){
 		var champ = $(this).attr('data-champ');
-		if(splashes.filter('[data-champ="' + champ + '"]').length == 0){
+		if(splashes.filter('[data-champ="' + champ + '"]').length === 0){
 			getPick(splashes.length).html(buildSplash(champ));
 		}
 	}
@@ -124,7 +124,7 @@ function start(){
 	var picks = games[game].order.slice(numChosen, numChosen + $("#depth").slider( "option", "value" ));
 
 	var args = {
-		'blueUser': ($('#team').val() == "blue"),
+		'blueUser': ($('#team').val() === "blue"),
 		'bans': $("#bans").multipleSelect("getSelects"),
 		'selfBans': $("#self-bans").multipleSelect("getSelects"),
 		'memory': $("#memory").slider( "option", "value" ),
@@ -171,6 +171,8 @@ function showResult(result, index, overflow){
 	var resultsContainer = $('#results-container');
 
 	builtResult = buildResult(result);
+
+	console.log(resultsContainer)
 
 	if(overflow){
 		resultsContainer.children().last().remove();
