@@ -86,28 +86,6 @@ html, body, #background {
 	width: 350px;
 }
 
-#slider-div {
-	min-width: 300px;
-}
-
-#slider-div > * {
-	padding-bottom: 24px;
-}
-
-.slider {
-	background: #519D9E;
-}
-
-.slider label {
-  position: absolute;
-  margin-top: 20px;
-  transform: translate(-50%, 0);
-}
-
-#status-div {
-	white-space: nowrap;
-}
-
 #results {
 	margin: 15px;
 	padding: 20px;
