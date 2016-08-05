@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 	<script type="text/javascript" src="js/design.js"></script>
+	<script type="text/javascript" src="js/search.js"></script>
 	
 	<script type="text/javascript" src="js/loadNetworks.js"></script>
 
@@ -57,8 +58,28 @@
 				</div>
 			</div>
 
+			<div id="slider-div">
+				<div>
+					<h3>Depth</h3>
+					<div id="depth" class="slider" data-range="1,10,1"></div>
+				</div>
+				<div>
+					<h3>Memory</h3>
+					<div id="memory" class="slider" data-range="20,100,20"></div>
+				</div>
+				<div>
+					<h3>Pruning Factor</h3>
+					<div id="pruning" class="slider" data-range="0,100,25" modifier="%"></div>
+				</div>
+			</div>
+
 			<div>
-				<button id="getResults">Get Results</button>
+				<button id="start">Start</button>
+				<button id="stop" disabled>Stop</button>
+			</div>
+
+			<div id="status-div"	>
+				Status: <span id="status">Idle</span>
 			</div>
 		</div>
 

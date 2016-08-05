@@ -4,7 +4,7 @@ var games = {
 	'league': null,
 }
 var game;
-var tables = {};
+var ALL_NETWORKS = {};
 
 function initialize(){
 	game = 'league';
@@ -38,10 +38,24 @@ function initialize(){
 		'minimumCountSelected': $(this).attr('data-minimum-count-selected'),
 	}).multipleSelect('uncheckAll');
 
-	$("#getResults").click(getResults);
+	$('.slider').each(function(){
+		var range = $(this).attr('data-range').split(',').map(Number);
+		var modifier = $(this).attr('modifier') || "";
+		$(this).slider({
+			'min': range[0],
+			'max': range[1],
+			'value': range[0],
+			'change': stop
+		});
+		for(var i=range[0]; i <= range[1]; i += range[2]){
+			$('<label>').text(i+modifier).css('left', (i-range[0])/(range[1]-range[0])*100 + '%').appendTo($(this));
+		}
+	});
 
 	animateChampPool();
-	loadFromHash();
+
+	$("#start").click(start);
+	$("#stop").click(stop);
 }
 
 function animateChampPool(){
@@ -96,44 +110,49 @@ function getTeam(team){
 	return $(team).find('.splash').map(function(){ return games[game].champs.indexOf($(this).attr('data-champ')) }).toArray();
 }
 
-function getResults(){
-	var table = tables[game][$('#division').val()].table;
-	var hash = buildHash();
-	var results =  table[hash];
-	if (!results) {
-		reportError(hash);
-	} else {
-		buildResults(results);
+function start(){
+	$('#results-container').empty();
+
+	$("#stop").removeAttr("disabled");
+	$("#start").attr("disabled",'');
+
+	var blueTeam = getTeam('#blue-team');
+	var redTeam = getTeam('#red-team');
+
+	var numChosen = blueTeam.length + redTeam.length;
+
+	var picks = games[game].order.slice(numChosen, numChosen + $("#depth").slider( "option", "value" ));
+
+	var args = {
+		'blueUser': ($('#team').val() === "blue"),
+		'bans': $("#bans").multipleSelect("getSelects"),
+		'selfBans': $("#self-bans").multipleSelect("getSelects"),
+		'memory': $("#memory").slider( "option", "value" ),
+		'pruning': $("#pruning").slider( "option", "value" ),
+		'networks': ALL_NETWORKS[game][$('#division').val()].networks,
+		'showResult': showResult,
+		'numChamps': games[game].champs.length,
+		'stop': stop,
+		'resume': resume
 	}
+
+	search(blueTeam, redTeam, picks, args);
 }
 
-//TODO
-function loadFromHash() {
-
+function stop(){
+	$("#start").removeAttr("disabled");
+	$("#stop").attr("disabled",'');
+	console.log('stop')
 }
 
-//TODO
-function buildHash() {
-
+function resume(){
+	return true;
 }
 
-//TODO
-function reportError(hash){
-
-}
-
-function buildResults(results) {
-	var resultsContainer = $('#results-container').empty();
-	for (var result of results) {
-		buildResult(result, resultsContainer);
-	}
-}
-
-function buildResult(result, resultsContainer){
+function buildResult(result){
 	var teams = $('<div class="result-teams">').append(buildResultTeam(result.blueTeam)).append(buildResultTeam(result.redTeam));
 	var scores = $('<div class="result-scores">').append(buildResultPercentage(result.score, 'Odds of Winning')).append(buildResultPercentage(result.popularity, 'Popularity'));
-	var result = $('<div class="result">').append(teams).append(scores);
-	result.appendTo(resultsContainer);
+	return $('<div class="result">').append(teams).append(scores);
 }
 
 function buildResultTeam(indices){
@@ -149,8 +168,25 @@ function buildResultPercentage(f, text){
 	return $('<div class="result-percentage">').text(text + ': ' + percentage);
 }
 
+function showResult(result, index, overflow){
+	var resultsContainer = $('#results-container');
+
+	var builtResult = buildResult(result);
+
+	if(overflow){
+		resultsContainer.children().last().remove();
+	}
+
+	if(index === 0){
+		builtResult.prependTo(resultsContainer);
+	}
+	else{
+		builtResult.insertAfter(resultsContainer.children().eq(index-1));
+	}
+}
+
 $(document).ready(function(){
-	loadTables(games, tables, initialize);
+	loadNetworks(games, ALL_NETWORKS, initialize);
 });
 
 })();

@@ -7,6 +7,3 @@
 [submodule "networks"]
 	path = networks
 	url = https://github.com/dcep93/league_networks.git
-[submodule "tables"]
-	path = tables
-	url = https://github.com/dcep93/league_tables.git
