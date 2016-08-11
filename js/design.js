@@ -1,14 +1,15 @@
+'use strict';
+
 (function() {
 
 var games = {
 	'league': null,
 }
-var game;
+var game = 'league';
 var ALL_NETWORKS = {};
+var searchWorker;
 
 function initialize(){
-	game = 'league';
-	
 	$('.picks').empty();
 
 	var numPicks = games[game].order.length / 2;
@@ -130,23 +131,36 @@ function start(){
 		'memory': $("#memory").slider( "option", "value" ),
 		'pruning': $("#pruning").slider( "option", "value" ),
 		'networks': ALL_NETWORKS[game][$('#division').val()].networks,
-		'showResult': showResult,
 		'numChamps': games[game].champs.length,
-		'stop': stop,
-		'resume': resume
 	}
 
-	search(blueTeam, redTeam, picks, args);
+	var message = {
+		"blueTeam": blueTeam,
+		"redTeam": redTeam,
+		"picks": picks,
+		"args": args
+	}
+
+	searchWorker = new Worker("js/search.js");
+	searchWorker.onmessage = handleResults;
+	searchWorker.postMessage(message);
+	updateHash();
 }
 
 function stop(){
 	$("#start").removeAttr("disabled");
 	$("#stop").attr("disabled",'');
+	searchWorker.terminate();
 	console.log('stop')
 }
 
-function resume(){
-	return true;
+function updateHash(){
+
+}
+
+// TODO
+function handleResults(results){
+	
 }
 
 function buildResult(result){
@@ -166,23 +180,6 @@ function buildResultTeam(indices){
 function buildResultPercentage(f, text){
 	var percentage = (f*100).toFixed(2) + '%';
 	return $('<div class="result-percentage">').text(text + ': ' + percentage);
-}
-
-function showResult(result, index, overflow){
-	var resultsContainer = $('#results-container');
-
-	var builtResult = buildResult(result);
-
-	if(overflow){
-		resultsContainer.children().last().remove();
-	}
-
-	if(index === 0){
-		builtResult.prependTo(resultsContainer);
-	}
-	else{
-		builtResult.insertAfter(resultsContainer.children().eq(index-1));
-	}
 }
 
 $(document).ready(function(){

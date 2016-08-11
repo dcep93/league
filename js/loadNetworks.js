@@ -1,3 +1,5 @@
+'use strict';
+
 var loadNetworks;
 
 (function(){
@@ -19,7 +21,7 @@ function loadNetworksMask(games, ALL_NETWORKS, initialize){
 		$.getJSON('networks/'+game+'/info.json', function(info){
 			games[info.game] = info;
 
-			if(doneLoadingGames(games)) {
+			if(doneLoadingGames(games)){
 				initialize();
 			}
 
