@@ -158,6 +158,7 @@ function updateHash(){
 
 }
 
+// TODO
 function showProgress(progress){
 	console.log(progress);
 }

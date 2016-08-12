@@ -39,6 +39,8 @@ function postResults(rawResults, numChamps){
 	return results;
 }
 
+// TODO memoization
+// TODO maybe post progress more frequently?
 function searchHelper(currentTeam, picks, args, original){
 	var userPick = (picks[0] === args.blueUser);
 	var memory = userPick ? args.memory : 1;
@@ -54,7 +56,7 @@ function searchHelper(currentTeam, picks, args, original){
 	var results = [];
 
 	var teamResult;
-	for(var i in teamResults){
+	for(var i=0;i<teamResults.length;i++){
 		if(original){
 			postMessage({"type": "progress", "progress": [i, teamResults.length]});
 		}
@@ -63,7 +65,7 @@ function searchHelper(currentTeam, picks, args, original){
 			handle(teamResult, results, userPick, memory, args);
 		} else {
 			var recursiveTeamResults = searchHelper(teamResult.team, picks.slice(), args, false);
-			for(var result of teamResults){
+			for(var result of recursiveTeamResults){
 				handle(result, results, userPick, memory, args);
 			}
 		}
@@ -84,7 +86,7 @@ function handle(result, results, userPick, memory, args){
 			while(upper > lower){
 				var mid = Math.floor((lower + upper) / 2);
 				if(betterScore(result.score, results[mid].score, args.blueUser)){
-					lower = mid;
+					lower = mid+1;
 				} else{
 					upper = mid;
 				}
@@ -145,7 +147,7 @@ function buildTeams(currentTeam, picks, args){
 // Array[Array[int]] teams array of sparce vectors
 // Array[Array[Array[float]]] network (array of matrices)
 // returns Array[Array[2 float[0,1]]] with same # of rows as teams array, 2 cols (score, popularity)
-//TODO 0 make it work...
+// TODO 0 make it work...
 function multiScore(teams, network){
 	function random(compress){
 		var r = Math.random();
