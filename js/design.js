@@ -8,6 +8,7 @@ var games = {
 var game = 'league';
 var ALL_NETWORKS = {};
 var searchWorker;
+var memo = {};
 
 function initialize(){
 	$('.picks').empty();
@@ -133,17 +134,18 @@ function start(){
 		'numChamps': games[game].champs.length,
 	}
 
-	var message = {
+	var data = {
 		"blueTeam": blueTeam,
 		"redTeam": redTeam,
 		"picks": picks,
-		"args": args
+		"args": args,
+		"memo": memo
 	}
 
 	searchWorker = new Worker("js/search.js");
 	searchWorker.onmessage = handleResults;
-	searchWorker.postMessage(message);
-	updateHash();
+	searchWorker.postMessage(data);
+	updateHash(data);
 }
 
 function stop(){
@@ -153,12 +155,12 @@ function stop(){
 	console.log('stop')
 }
 
-// TODO
-function updateHash(){
+// TODO updateHash
+function updateHash(data, results){
 
 }
 
-// TODO
+// TODO showProgress
 function showProgress(progress){
 	console.log(progress);
 }
@@ -172,12 +174,13 @@ function handleResults(message){
 		for(var result of data.results){
 			resultsContainer.append(buildResult(result));
 		}
-		updateHash();
+		updateHash(data.data, data.results);
 		stop();
 	} else{
 		console.log("bad message:");
 		console.log(message);
 	}
+	memo = data.memo;
 }
 
 function buildResult(result){

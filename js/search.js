@@ -2,6 +2,9 @@
 
 onmessage = search;
 
+var memo;
+var postFreq = 5;
+
 function search(message){
 	var data = message.data;
 	var blueTeam = data.blueTeam;
@@ -9,11 +12,13 @@ function search(message){
 	var picks = data.picks;
 	var args = data.args;
 	var numChamps = args.numChamps;
+	memo = args.memo;
 
 	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+numChamps }));
+
 	var rawResults = searchHelper(currentTeam, picks, args, true);
 
-	postMessage({"type": "results", "results": postResults(rawResults, numChamps), "data": data});
+	postMessage({"type": "results", "results": postResults(rawResults, numChamps), "data": data, "memo": memo});
 }
 
 function postResults(rawResults, numChamps){
@@ -39,9 +44,11 @@ function postResults(rawResults, numChamps){
 	return results;
 }
 
-// TODO memoization
-// TODO maybe post progress more frequently?
 function searchHelper(currentTeam, picks, args, original){
+	var getMemo = memo[currentTeam];
+	if(getMemo){
+		return getMemo;
+	}
 	var userPick = (picks[0] === args.blueUser);
 	var memory = userPick ? args.memory : 1;
 
@@ -57,8 +64,8 @@ function searchHelper(currentTeam, picks, args, original){
 
 	var teamResult;
 	for(var i=0;i<teamResults.length;i++){
-		if(original){
-			postMessage({"type": "progress", "progress": [i, teamResults.length]});
+		if(original && (i % postFreq === 0)){
+			postMessage({"type": "progress", "progress": [i, teamResults.length], "memo": memo});
 		}
 		teamResult = teamResults[i];
 		if(picks.length === 0){
@@ -70,6 +77,7 @@ function searchHelper(currentTeam, picks, args, original){
 			}
 		}
 	}
+	memo[currentTeam] = results;
 	return results;
 }
 
