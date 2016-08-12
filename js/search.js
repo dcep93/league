@@ -10,86 +10,71 @@ function search(message){
 	var numChamps = message.args.numChamps;
 
 	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+numChamps }));
-	var results = searchHelper(currentTeam, picks, args, []);
-	postMessage(results);
+	var results = searchHelper(currentTeam, picks, args, true);
+	postMessage({"type": "results", "results": results});
 }
 
-function searchHelper(currentTeam, picks, args, shownResults){
+function searchHelper(currentTeam, picks, args, original){
 	var userPick = (picks[0] === args.blueUser);
 	var memory = userPick ? args.memory : 1;
 
 	var teams = buildTeams(currentTeam, picks, args);
 
-	if(picks.length === 0){
-		var network = args.networks[currentTeam.length];
-		results = multiScore(teams, network);
+	var network = args.networks[currentTeam.length];
+	var teamResults = multiScore(teams, network);
 
-		for(var result of results){
-			handle(result, shownResults, userPick, memory, toHandle, args);
+	// TODO make sure sort/prune is good
+	teamResults.sort(function(a,b){ return (a.score - b.score) * (args.blueUser ? 1 : -1) });
+	teamResults = teamResults.slice(0, Math.floor((1 - args.pruning) * teamResults.length))
+
+	var results = [];
+
+	var teamResult;
+	for(var i in teamResults){
+		if(original){
+			postMessage({"type": "progress", "progress": [i+1, teamResults.length]});
 		}
-
-		return results;
-	}
-	else{
-		var teamResults;
-		// TODO 3 figure out wtf this is
-		results = [];
-		for(var team of teams){
-			// TODO 2 handle 2nd tier if his turn then your turn
-			teamResults = searchHelper(team, picks.slice(), args, false, shownResults);
+		teamResult = teamResults[i];
+		if(picks.length === 0){
+			handle(teamResult, results, userPick, memory, args);
+		} else {
+			var recursiveTeamResults = searchHelper(teamResult.team, picks.slice(), args, false);
 			for(var result of teamResults){
-				handle(result, shownResults, userPick, memory, toHandle, args);
+				handle(result, results, userPick, memory, args);
 			}
 		}
-		return results;
 	}
+	return results;
 }
 
-function includeScore(score, shownResultScore, blueUser){
+function betterScore(score, shownResultScore, blueUser){
 	var m = blueUser ? 1 : -1;
 	return (score * m) > (shownResultScore * m);
 }
 
-//TODO 4 make it faster... (using binary search (starting from the end!!!))
-function handle(result, shownResults, userPick, memory, toHandle, args){
-	for(var i=0;i<shownResults.length;i++){
-		if(includeScore(result.score, shownResults[i], args.blueUser)){
-			shownResults.splice(i, 0, result.score);
-			overflow = shownResults.length > memory;
-			if(overflow){
-				shownResults.pop();
+function handle(result, results, userPick, memory, args){
+	if(results.length > 0){
+		if(betterScore(result.score, results[results.length-1].score, args.blueUser)){
+			var lower = 0;
+			var upper = results.length-1;
+			while(upper > lower){
+				var mid = Math.floor((lower + upper) / 2);
+				if(betterScore(result.score, results[mid].score, args.blueUser)){
+					lower = mid;
+				} else{
+					upper = mid;
+				}
 			}
-			if(toHandle){
-				showResultHelper(result, args, i, overflow);
+			results.splice(lower, 0, result);
+			if(results.length > memory){
+				results.pop();
 			}
 			return;
 		}
 	}
-	if(shownResults.length < memory){
-		if(toHandle){
-			showResultHelper(result, args, shownResults.length, false);
-		}
-		shownResults.push(result.score);
+	if(results.length < memory){
+		results.push(result)
 	}
-}
-
-function showResultHelper(result, args, index, overflow){
-	var blueTeam = [];
-	var redTeam = [];
-	for(var champ of result.team){
-		if(champ < args.numChamps){
-			blueTeam.push(champ);
-		}
-		else{
-			redTeam.push(champ-args.numChamps);
-		}
-	}
-	args.showResult({
-		'blueTeam': blueTeam,
-		'redTeam': redTeam,
-		'score': args.blueUser ? result.score : 1-result.score,
-		'popularity': result.popularity
-	}, index, overflow);
 }
 
 function canPickChamp(i, team, pick, args){
@@ -101,7 +86,6 @@ function canPickChamp(i, team, pick, args){
 	return false;
 }
 
-//TODO 1 dont build teams below the pruning cutoff
 function buildTeams(currentTeam, picks, args){
 	var pick = picks.shift();
 
