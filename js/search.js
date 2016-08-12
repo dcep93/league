@@ -10,8 +10,32 @@ function search(message){
 	var numChamps = message.args.numChamps;
 
 	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+numChamps }));
-	var results = searchHelper(currentTeam, picks, args, true);
-	postMessage({"type": "results", "results": results});
+	var rawResults = searchHelper(currentTeam, picks, args, true);
+
+	postMessage({"type": "results", "results": postResults(rawResults, numChamps)});
+}
+
+function postResults(rawResults, numChamps){
+	results = [];
+	for(var result of rawResults){
+		var blueTeam = [];
+		var redTeam = [];
+		for(var champ of result.team){
+			if(champ < numChamps){
+				blueTeam.push(champ);
+			} else {
+				redTeam.push(champ - numChamps);
+			}
+		}
+		var result = {
+			"blueTeam": blueTeam,
+			"redTeam": redTeam,
+			"score": result.score,
+			"popularity": result.popularity
+		}
+		results.push(result);
+	}
+	return results;
 }
 
 function searchHelper(currentTeam, picks, args, original){
@@ -23,8 +47,7 @@ function searchHelper(currentTeam, picks, args, original){
 	var network = args.networks[currentTeam.length];
 	var teamResults = multiScore(teams, network);
 
-	// TODO make sure sort/prune is good
-	teamResults.sort(function(a,b){ return (a.score - b.score) * (args.blueUser ? 1 : -1) });
+	teamResults.sort(function(a,b){ return (b.score - a.score) * (args.blueUser ? 1 : -1) });
 	teamResults = teamResults.slice(0, Math.floor((1 - args.pruning) * teamResults.length))
 
 	var results = [];

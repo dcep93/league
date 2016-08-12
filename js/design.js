@@ -46,7 +46,6 @@ function initialize(){
 			'min': range[0],
 			'max': range[1],
 			'value': range[0],
-			'change': stop
 		});
 		for(var i=range[0]; i <= range[1]; i += range[2]){
 			$('<label>').text(i+modifier).css('left', (i-range[0])/(range[1]-range[0])*100 + '%').appendTo($(this));
@@ -154,13 +153,21 @@ function stop(){
 	console.log('stop')
 }
 
+// TODO
 function updateHash(){
 
 }
 
-// TODO
 function handleResults(results){
-	
+	if(results.type === "progress"){
+		showProgress(results.progress);
+	} else {
+		var resultsContainer = $("#results-container")
+		for(var result of results){
+			resultsContainer.append(buildResult(result));
+		}
+		updateHash();
+	}
 }
 
 function buildResult(result){
