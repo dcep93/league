@@ -158,15 +158,24 @@ function updateHash(){
 
 }
 
-function handleResults(results){
-	if(results.type === "progress"){
-		showProgress(results.progress);
-	} else {
+function showProgress(progress){
+	console.log(progress);
+}
+
+function handleResults(message){
+	var data = message.data;
+	if(data.type === "progress"){
+		showProgress(data.progress);
+	} else if(data.type === "results") {
 		var resultsContainer = $("#results-container")
-		for(var result of results){
+		for(var result of data.results){
 			resultsContainer.append(buildResult(result));
 		}
 		updateHash();
+		stop();
+	} else{
+		console.log("bad message:");
+		console.log(message);
 	}
 }
 
