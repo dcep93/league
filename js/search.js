@@ -4,6 +4,18 @@ onmessage = search;
 
 var memo;
 var postFreq = 5;
+var start_time = new Date();
+
+function elapsed(){
+	var end_time = new Date();
+	return (end_time - start_time) / 1000;
+}
+
+function postMessageWrapper(data){
+	data["memo"] = memo;
+	data["elapsed"] = elapsed();
+	postMessage(data);
+}
 
 function search(message){
 	var data = message.data;
@@ -12,13 +24,13 @@ function search(message){
 	var picks = data.picks;
 	var args = data.args;
 	var numChamps = args.numChamps;
-	memo = args.memo;
+	memo = data.memo;
 
 	var currentTeam = blueTeam.concat(redTeam.map(function(i){ return i+numChamps }));
 
 	var rawResults = searchHelper(currentTeam, picks, args, true);
 
-	postMessage({"type": "results", "results": postResults(rawResults, numChamps), "data": data, "memo": memo});
+	postMessageWrapper({"type": "results", "results": postResults(rawResults, numChamps), "data": data});
 }
 
 function postResults(rawResults, numChamps){
@@ -64,8 +76,9 @@ function searchHelper(currentTeam, picks, args, original){
 
 	var teamResult;
 	for(var i=0;i<teamResults.length;i++){
-		if(original && (i % postFreq === 0)){
-			postMessage({"type": "progress", "progress": [i, teamResults.length], "memo": memo});
+		if(true){
+		// if(original && (i % postFreq === 0)){
+			postMessage({"type": "progress", "progress": [i, teamResults.length]});
 		}
 		teamResult = teamResults[i];
 		if(picks.length === 0){

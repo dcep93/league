@@ -10,6 +10,19 @@ var ALL_NETWORKS = {};
 var searchWorker;
 var memo = {};
 
+var QueryString = function () {
+  // This function is anonymous, is executed immediately and 
+  // the return value is assigned to QueryString!
+  var query_string = {};
+  var query = window.location.search.substring(1).replace(/\/$/,'');
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    query_string[pair[0]] = decodeURIComponent(pair[1]);
+  } 
+  return query_string;
+}();
+
 function initialize(){
 	$('.picks').empty();
 
@@ -57,6 +70,8 @@ function initialize(){
 
 	$("#start").click(start);
 	$("#stop").click(stop);
+
+	loadFromURL();
 }
 
 function animateChampPool(){
@@ -145,7 +160,7 @@ function start(){
 	searchWorker = new Worker("js/search.js");
 	searchWorker.onmessage = handleResults;
 	searchWorker.postMessage(data);
-	updateHash(data);
+	updateURL(data);
 }
 
 function stop(){
@@ -155,26 +170,48 @@ function stop(){
 	console.log('stop')
 }
 
-// TODO updateHash
-function updateHash(data, results){
-
+function urlEncode(o){
+	var s = JSON.stringify(o);
+	return encodeURIComponent(s);
 }
 
-// TODO showProgress
-function showProgress(progress){
-	console.log(progress);
+// TODO 2 loadFromURL
+function loadFromURL(){
+	var params = JSON.parse(QueryString.params);
+	var results = JSON.parse(QueryString.results);
+	console.log([params]);
+	console.log([results]);
+}
+
+// TODO 3 updateURL
+function updateURL(data, results){
+	if (history.pushState) {
+	    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?params=";
+	    newurl += urlEncode(data);
+	    if(results){
+	    	newurl += "&results=";
+	    	newurl += urlEncode(results);
+	    }
+	    window.history.pushState({path:newurl},'',newurl);
+	}
+}
+
+// TODO 1 showProgress
+function showProgress(data){
+	console.log(data.progress);
+	memo = data.memo;
 }
 
 function handleResults(message){
 	var data = message.data;
 	if(data.type === "progress"){
-		showProgress(data.progress);
+		showProgress(data);
 	} else if(data.type === "results") {
 		var resultsContainer = $("#results-container")
 		for(var result of data.results){
 			resultsContainer.append(buildResult(result));
 		}
-		updateHash(data.data, data.results);
+		updateURL(data.data, data.results);
 		stop();
 	} else{
 		console.log("bad message:");
