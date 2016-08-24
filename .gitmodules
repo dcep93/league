@@ -1,0 +1,9 @@
+[submodule "shared"]
+	path = shared
+	url = https://github.com/dcep93/shared
+[submodule "images"]
+	path = images
+	url = https://github.com/dcep93/league_images.git
+[submodule "networks"]
+	path = networks
+	url = https://github.com/dcep93/league_networks
