@@ -43,62 +43,65 @@
 
 		<div id="splashes"></div>
 
-		<div id="controls">
-			<div>
-				<h3>Division:</h3>
-				<select id="division" onchange="stop()"></select>
-				<h3>Team:</h3>
-				<select id="team">
-					<option value="blue">Blue</option>
-					<option value="red">Red</option>
-				</select>
+		<div id="sections">
+			<div id="controls">
+				<div>
+					<h3>Division:</h3>
+					<select id="division" onchange="stop()"></select>
+					<h3>Team:</h3>
+					<select id="team">
+						<option value="blue">Blue</option>
+						<option value="red">Red</option>
+					</select>
+				</div>
+
+				<div>
+					<div>
+						<h3>Bans</h3>
+						<select id="bans" class="bans" data-minimum-count-selected="3"></select>
+					</div>
+					<div>
+						<h3>Self-Bans</h3>
+						<div class="tooltip">The opposing team can select these champs, but you can't. (Champs you don't want to play)</div>
+						<select id="self-bans" class="bans" data-minimum-count-selected="8"></select>
+					</div>
+				</div>
+
+				<div id="slider-div">
+					<div>
+						<h3>Depth</h3>
+						<div class="tooltip">Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
+						<div id="depth" class="slider" data-range="1,10,1"></div>
+					</div>
+					<div>
+						<h3>Pruning Factor</h3>
+						<div class="tooltip">Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively.</div>
+						<div id="pruning" class="slider" data-range="0,90,15" modifier="%"></div>
+					</div>
+				</div>
+
+				<div>
+					<button id="start">Start</button>
+					<button id="stop" disabled>Stop</button>
+				</div>
 			</div>
 
-			<div>
-				<div>
-					<h3>Bans</h3>
-					<select id="bans" class="bans" data-minimum-count-selected="3"></select>
-				</div>
-				<div>
-					<h3>Self-Bans</h3>
-					<div class="tooltip">The opposing team can select these champs, but you can't. (Champs you don't want to play)</div>
-					<select id="self-bans" class="bans" data-minimum-count-selected="8"></select>
-				</div>
+			<div id="results">
+				<h1>Results</h1>
+				<div id="progress"></div>
+				<div id="results-container"></div>
 			</div>
 
-			<div id="slider-div">
-				<div>
-					<h3>Depth</h3>
-					<div class="tooltip">Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
-					<div id="depth" class="slider" data-range="1,10,1"></div>
-				</div>
-				<div>
-					<h3>Pruning Factor</h3>
-					<div class="tooltip">Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively.</div>
-					<div id="pruning" class="slider" data-range="0,90,15" modifier="%"></div>
-				</div>
+			<div id="time-benchmarks">
+				<h1>Sample Time Benchmarks</h1>
+				<table id="time-benchmarks-table">
+					<tr>
+						<th>Depth</th>
+						<th>Pruning Factor</th>
+						<th>Duration</th>
+					</tr>
+				</table>
 			</div>
-
-			<div>
-				<button id="start">Start</button>
-				<button id="stop" disabled>Stop</button>
-			</div>
-		</div>
-
-		<div id="results">
-			<h1>Results</h1>
-			<div id="progress"></div>
-			<div id="results-container"></div>
-		</div>
-
-		<div id="time-benchmarks">
-			<table id="time-benchmarks-table">
-				<tr>
-					<th>Depth</th>
-					<th>Pruning Factor</th>
-					<th>Duration</th>
-				</tr>
-			</table>
 		</div>
 	</body>
 </html>
