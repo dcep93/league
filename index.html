@@ -27,8 +27,12 @@
 	<body>
 		<div id="background"></div>
 
-		<div id="logo">
-			<h1>/league</h1>
+		<div id="logo-container1">
+			<div id="logo-container2">
+				<div id="logo">
+					/league
+				</div>
+			</div>
 		</div>
 
 		<div id="champ-select">
@@ -48,49 +52,51 @@
 		<div id="splashes"></div>
 
 		<div id="sections">
-			<div id="controls">
-				<div>
-					<h3>Division:</h3>
-					<select id="division"></select>
-					<h3>Team:</h3>
-					<select id="team">
-						<option value="blue">Blue</option>
-						<option value="red">Red</option>
-					</select>
+			<div id="controls-container">
+				<div id="controls">
+					<div>
+						<h2>Division:</h2>
+						<select id="division"></select>
+						<h2>Team:</h2>
+						<select id="team">
+							<option value="blue">Blue</option>
+							<option value="red">Red</option>
+						</select>
+					</div>
+
+					<div>
+						<div>
+							<h2>Bans</h2>
+							<select id="bans" class="bans" data-minimum-count-selected="3"></select>
+						</div>
+						<div>
+							<h2>Self-Bans</h2>
+							<div class="tooltip">Tooltip: The opposing team can select these champs, but you can't. (Champs you don't want to play)</div>
+							<select id="self-bans" class="bans" data-minimum-count-selected="8"></select>
+						</div>
+					</div>
+
+					<div id="slider-div">
+						<div>
+							<h2>Depth</h2>
+							<div class="tooltip">Tooltip: Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
+							<div id="depth" class="slider" data-range="1,10,1"></div>
+						</div>
+						<div>
+							<h2>Pruning Factor</h2>
+							<div class="tooltip">Tooltip: Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively. Increasing this value significantly reduces search time.</div>
+							<div id="pruning" class="slider" data-range="0,90,15" data-start="30" data-modifier="%"></div>
+						</div>
+					</div>
 				</div>
 
-				<div>
-					<div>
-						<h3>Bans</h3>
-						<select id="bans" class="bans" data-minimum-count-selected="3"></select>
-					</div>
-					<div>
-						<h3>Self-Bans</h3>
-						<div class="tooltip">The opposing team can select these champs, but you can't. (Champs you don't want to play)</div>
-						<select id="self-bans" class="bans" data-minimum-count-selected="8"></select>
-					</div>
-				</div>
-
-				<div id="slider-div">
-					<div>
-						<h3>Depth</h3>
-						<div class="tooltip">Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
-						<div id="depth" class="slider" data-range="1,10,1"></div>
-					</div>
-					<div>
-						<h3>Pruning Factor</h3>
-						<div class="tooltip">Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively. Increasing this value significantly reduces search time.</div>
-						<div id="pruning" class="slider" data-range="0,90,15" data-start="30" data-modifier="%"></div>
-					</div>
-				</div>
-
-				<div>
+				<div id="buttons">
 					<button id="start">Start</button>
 					<button id="stop" disabled>Stop</button>
 				</div>
 			</div>
 
-			<div id="results">
+			<div id="results" style="display: none;">
 				<h1>Results</h1>
 				<div id="progress"></div>
 				<div id="results-container"></div>
@@ -111,6 +117,8 @@
 				<h1>Description</h1>
 				<div>
 					/league (read: slash league) is a data-driven web app to help League of Legends players win more games by using machine learning during the champ select phase.
+				</div>
+				<div>
 					Simliar to most chess AIs, /league uses a variation of <a href="https://en.wikipedia.org/wiki/Minimax">minimax</a> to determine an optimal team composition at any stage in champ select.
 					An optimal team composition is made of champions that work well together as well as counter the opponent's champions.
 					Intelligent champion select is half the game - your opponents won't know what hit them.
@@ -167,6 +175,9 @@
 				<div id="contact">
 					<h1>Contact</h1>
 					<div>Send comments, requests, questions, and bugs to <span>dcep93@gmail.com</span></div>
+					<div>
+						If you can see this, the site is in construction! I'm looking for any and all tips out there, but primarily looking for suggestions on the Description section, How to Use section, the trash start/stop buttons, the trash tooltips in the controls section, the sample time benchmarks, and the design/feel of the overall site.
+					</div>
 				</div>
 				<div id="privacy">
 					Privacy Policy coming soon

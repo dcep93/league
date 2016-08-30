@@ -13,10 +13,24 @@ html, body, #background {
     z-index: -1;
 }
 
-#logo {
-	height: 200px;
-	width: 600px;
+#logo-container1 {
+	padding: 20px;
+	text-align: center;
+}
+
+#logo-container2 {
 	background-color: rgba(255,255,255,0.8);
+	border: 2px solid;
+	border-radius: 15px;
+	margin: 0 auto;
+	padding: 20px;
+	display: inline-block;
+}
+
+#logo {
+	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+	font-size: 8em;
+	display: inline-block;
 }
 
 #champ-select {
@@ -87,6 +101,10 @@ html, body, #background {
 	padding: 20px;
 }
 
+#sections > div > div {
+	padding: 7px;
+}
+
 #controls {
 	display: flex;
 	justify-content: space-around;
@@ -120,8 +138,16 @@ html, body, #background {
   transform: translate(-50%, 0);
 }
 
-#status-div {
-	white-space: nowrap;
+#buttons {
+	display: flex;
+	justify-content: space-around;
+}
+
+#buttons > button {
+	font-size: 2em;
+	padding: 14px;
+	border-radius: 15px;
+	background-color: white;
 }
 
 .result {
