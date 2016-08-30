@@ -27,6 +27,10 @@
 	<body>
 		<div id="background"></div>
 
+		<div id="logo">
+			<h1>/league</h1>
+		</div>
+
 		<div id="champ-select">
 			<div class="team" id="blue-team">
 				<div class="picks"></div>
@@ -105,17 +109,71 @@
 
 			<div id="description">
 				<h1>Description</h1>
-				<div>WHAT DO I WRITE HERE</div>
+				<div>
+					/league (read: slash league) is a data-driven web app to help League of Legends players win more games by using machine learning during the champ select phase.
+					Simliar to most chess AIs, /league uses a variation of <a href="https://en.wikipedia.org/wiki/Minimax">minimax</a> to determine an optimal team composition at any stage in champ select.
+					An optimal team composition is made of champions that work well together as well as counter the opponent's champions.
+					Intelligent champion select is half the game - your opponents won't know what hit them.
+				</div>
+				<div>
+					There is no voting system in /league, because (pending Riot approval) we analyze millions of games a day in order to discover both visible and hard-to-see trends in champion countering statistics.
+					(Fake data for now - to be fixed once we receive Riot data and an example is found) For example, lolcounter.com shows Kayle as the strongest counter to Zed, though an analysis of 200 million games shows that Zed wins 52% of games against Kayle.
+					It may be true that Kayle usually wins lane against Zed, but /league finds team compositions that will win players games - not necessarily winning lane.
+					(Again, fake data) Of the 200 million games analyzed from Patch 6.15, the outcome of 72% of games were predicted correctly based on team composition alone, acheiving 89% accuracy using weighted certainty.
+				</div>
+				<div>
+					/league does not take into account a player's (and their team's) personal statistics on each champion, though this feature may come in an upcoming release.
+					Additionally, we don't take into account lane selection. We aim to mimic pro play champion select - where the team communicates fluidly, has every champ unlocked, and trades to match their lanes.
+					This also opens possibilities of non-conventional lane choices.
+					Still, popularity of a composition is always displayed, so players will be warned if they are choosing a risky path.
+				</div>
+				<div>
+					Oh god I'm a terrible writer - someone please tell me how to fix this
+				</div>
 			</div>
 
 			<div id="how-to-use">
 				<h1>How to Use</h1>
-				<div>WHAT DO I WRITE HERE pt 2</div>
+				<div>
+					One at a time, select champions that have already been chosen in your game.
+					Be careful! Blue side is always on the left on /league.
+				</div>
+				<div>
+					Next select your division and game side (blue/red).
+				</div>
+				<div>
+					The champions selected in "Bans" cannot be chosen by either side, and the champions selected in "Self-Bans" can be chosen by your opponent, but not by your team.
+					Self-banned champions are usually champions that you or your team don't feel comfortable playing, or just don't feel like playing.
+				</div>
+				<div>
+					Depth and pruning factor are the primary factors that determine the duration of the search.
+					Depth is the number of possible opponent responses that are measured.
+					A depth of 1 only finds the proportion of games winnable by the next chosen champ, but a depth of 2 also takes into account each response by the opponent.
+					Increasing depth dramatically increases computation time.
+					Pruning factor determines the proportion of paths that are ignored.
+					A pruning factor of 90% quickly stops investigating team compositions that are likely to do poorly, while a pruning factor of 0% investigates literally every possible champion selection combination.
+					Increasing pruning factor decreases computation time.
+				</div>
+				<div>
+					Finally, click Start to begin the search. Your progress will be displayed, and the results are shown along with win probability and a soft popularity score as a percentage.
+					You can share the results with a friend or save them for later by sending them the url after results have been calculated.
+				</div>
+				<div>
+					Oh god I'm a terrible writer - someone please tell me how to fix this pt2
+				</div>
 			</div>
 
-			<div id="contact">
-				<h1>Contact</h1>
-				<div>Send comments, requests, and bugs to <span>dcep93@gmail.com</span></div>
+			<div id="additional-notes">
+				<div id="contact">
+					<h1>Contact</h1>
+					<div>Send comments, requests, questions, and bugs to <span>dcep93@gmail.com</span></div>
+				</div>
+				<div id="privacy">
+					Privacy Policy coming soon
+				</div>
+				<div id="copyright">
+					Copyright coming soon
+				</div>
 			</div>
 		</div>
 	</body>

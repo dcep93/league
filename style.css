@@ -13,6 +13,12 @@ html, body, #background {
     z-index: -1;
 }
 
+#logo {
+	height: 200px;
+	width: 600px;
+	background-color: rgba(255,255,255,0.8);
+}
+
 #champ-select {
 	padding: 20px;
 	height: 700px;
