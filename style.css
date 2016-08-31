@@ -105,8 +105,8 @@ html, body, #background {
 	padding: 20px;
 }
 
-.text-section > * {
-	padding: 7px;
+.text {
+	font-size: 1.2em;
 }
 
 #controls {
