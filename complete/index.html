@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<title>6.11 League Neural Network</title>
+
+	<link rel="icon" type="image/png" href="../shared/d/d.png">
+
+	<script type="text/javascript" src="../shared/jquery/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../shared/jquery/jquery-migrate-1.2.1.js"></script>
+	<script type="text/javascript" src="../shared/jquery/jquery-ui-1.12.0/jquery-ui.js"></script>
+	<link rel="stylesheet" href="../shared/jquery/jquery-ui-1.12.0/jquery-ui.css">
+
+	<script type="text/javascript" src="../shared/multiple-select/multiple-select.js"></script>
+	<link rel="stylesheet" type="text/css" href="../shared/multiple-select/multiple-select.css">
+	
+	<script type="text/javascript" src="../shared/lz-string/lz-string.min.js"></script>
+	
+	<script type="text/javascript" src="../shared/underscore/underscore-min.js"></script>
+
+	<script src="../shared/firebase/firebase-app.js"></script>
+	<script src="../shared/firebase/firebase-database.js"></script>
+
+	<script type="text/javascript">
+		window.path_prefix = '../';
+	</script>
+
+	<script type="text/javascript" src="../js/design.js"></script>	
+	<script type="text/javascript" src="../js/loadNetworks.js"></script>	
+
+	<link rel="stylesheet" type="text/css" href="../style.css">
+
+	<body>
+		<div id="background"></div>
+
+		<div id="logo-container1">
+			<div id="logo-container2">
+				<div id="logo" class="courier-new">
+					/league
+				</div>
+			</div>
+		</div>
+
+		<div id="champ-select">
+			<div class="team" id="blue-team">
+				<div class="picks"></div>
+			</div>
+
+			<div id="champ-pool-container">
+				<div id="champ-pool"></div>
+			</div>
+
+			<div class="team" id="red-team">
+				<div class="picks"></div>
+			</div>
+		</div>
+
+		<div id="splashes"></div>
+
+		<div>
+			<div class="section" id="controls-container">
+				<div id="controls">
+					<div class="control-container">
+						<h2>Division:</h2>
+						<select id="division"></select>
+						<h2>Team:</h2>
+						<select id="team">
+							<option value="blue">Blue</option>
+							<option value="red">Red</option>
+						</select>
+					</div>
+
+					<div class="control-container">
+						<div>
+							<h2>Bans</h2>
+							<select id="bans" class="bans" data-minimum-count-selected="3"></select>
+						</div>
+						<div>
+							<h2>Self-Bans</h2>
+							<div class="tooltip">Tooltip: The opposing team can select these champs, but you can't. (Champs you don't want to play)</div>
+							<select id="self-bans" class="bans" data-minimum-count-selected="8"></select>
+						</div>
+					</div>
+
+					<div class="control-container" id="sliders-container">
+						<div class="slider-container">
+							<h2>Depth</h2>
+							<div class="tooltip">Tooltip: Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
+							<div id="depth" class="slider" data-range="1,10,1"></div>
+						</div>
+						<div class="slider-container">
+							<h2>Pruning Factor</h2>
+							<div class="tooltip">Tooltip: Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively. Increasing this value significantly reduces search time.</div>
+							<div id="pruning" class="slider" data-range="0,90,15" data-start="30" data-modifier="%"></div>
+						</div>
+					</div>
+				</div>
+
+				<div id="buttons">
+					<button class="button courier-new" id="start">Start</button>
+					<button class="button courier-new" id="stop" disabled>Stop</button>
+				</div>
+			</div>
+
+			<div class="section" id="results" style="display: none;">
+				<h1>Results</h1>
+				<div id="progress"></div>
+				<div id="results-container"></div>
+			</div>
+
+			<div class="section" id="time-benchmarks">
+				<h1>Sample Time Benchmarks</h1>
+				<table id="time-benchmarks-table">
+					<tr>
+						<th>Depth</th>
+						<th>Pruning Factor</th>
+						<th>Duration</th>
+					</tr>
+				</table>
+			</div>
+
+			<div class="section" id="description">
+				<h1>Description</h1>
+				<ul class="text">
+					<li>
+						<span class="courier-new">/league</span> (read: slash league) is a data-driven web app to help League of Legends players win more games by using machine learning during the champ select phase.
+					</li>
+					<li>
+						Simliar to most chess AIs, <span class="courier-new">/league</span> uses a variation of <a href="https://en.wikipedia.org/wiki/Minimax">minimax</a> to determine an optimal team composition at any stage in champ select.
+						An optimal team composition is made of champions that work well together as well as counter the opponent's champions.
+						Intelligent champion select is half the game - your opponents won't know what hit them.
+					</li>
+					<li>
+						There is no voting system in <span class="courier-new">/league</span>, because (pending Riot approval) we analyze millions of games a day in order to discover both visible and hard-to-see trends in champion countering statistics.
+						(Fake data for now - to be fixed once we receive Riot data and an example is found) For example, lolcounter.com shows Kayle as the strongest counter to Zed, though an analysis of 200 million games shows that Zed wins 52% of games against Kayle.
+						It may be true that Kayle usually wins lane against Zed, but <span class="courier-new">/league</span> finds team compositions that will win players games - not necessarily winning lane.
+						(Again, fake data) Of the 200 million games analyzed from Patch 6.15, the outcome of 72% of games were predicted correctly based on team composition alone, acheiving 89% accuracy using weighted certainty.
+					</li>
+					<li>
+						<span class="courier-new">/league</span> does not take into account a player's (and their team's) personal statistics on each champion, though this feature may come in an upcoming release.
+						Additionally, we don't take into account lane selection. We aim to mimic pro play champion select - where the team communicates fluidly, has every champ unlocked, and trades to match their lanes.
+						This also opens possibilities of non-conventional lane choices.
+						Still, popularity of a composition is always displayed, so players will be warned if they are choosing a risky path.
+					</li>
+					<li>
+						Oh god I'm a terrible writer - someone please tell me how to fix this
+					</li>
+				</ul>
+			</div>
+
+			<div class="section" id="how-to-use">
+				<h1>How to Use</h1>
+				<ul class="text">
+					<li>
+						One at a time, select champions that have already been chosen in your game.
+						Be careful! Blue side is always on the left on <span class="courier-new">/league</span>.
+					</li>
+					<li>
+						Next select your division and game side (blue/red).
+					</li>
+					<li>
+						The champions selected in "Bans" cannot be chosen by either side, and the champions selected in "Self-Bans" can be chosen by your opponent, but not by your team.
+						Self-banned champions are usually champions that you or your team don't feel comfortable playing, or just don't feel like playing.
+					</li>
+					<li>
+						Depth and pruning factor are the primary factors that determine the duration of the search.
+						Depth is the number of possible opponent responses that are measured.
+						A depth of 1 only finds the proportion of games winnable by the next chosen champ, but a depth of 2 also takes into account each response by the opponent.
+						Increasing depth dramatically increases computation time.
+						Pruning factor determines the proportion of paths that are ignored.
+						A pruning factor of 90% quickly stops investigating team compositions that are likely to do poorly, while a pruning factor of 0% investigates literally every possible champion selection combination.
+						Increasing pruning factor decreases computation time.
+					</li>
+					<li>
+						Finally, click Start to begin the search. Your progress will be displayed, and the results are shown along with win probability and a soft popularity score as a percentage.
+						You can share the results with a friend or save them for later by sending them the url after results have been calculated.
+					</li>
+					<li>
+						Oh god I'm a terrible writer - someone please tell me how to fix this pt2
+					</li>
+				</ul>
+			</div>
+
+			<div class="section" id="additional-notes">
+				<div id="contact">
+					<h1>Contact</h1>
+					<ul class="text">
+						<li>Send comments, requests, questions, and bugs to <span>dcep93@gmail.com</span></li>
+						<li>
+							If you can see this, the site is in construction! I'm looking for any and all tips out there, but primarily looking for suggestions on the Description section, How to Use section, the trash start/stop buttons, the trash tooltips in the controls section, the sample time benchmarks, and the design/feel of the overall site.
+						</li>
+					</ul>
+				</div>
+				<div id="privacy">
+					Privacy Policy coming soon
+				</div>
+				<div id="copyright">
+					Copyright coming soon
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
