@@ -29,7 +29,7 @@
 
 		<div id="logo-container1">
 			<div id="logo-container2">
-				<div id="logo">
+				<div id="logo" class="courier-new">
 					/league
 				</div>
 			</div>
@@ -51,10 +51,10 @@
 
 		<div id="splashes"></div>
 
-		<div id="sections">
-			<div id="controls-container">
+		<div>
+			<div class="section" id="controls-container">
 				<div id="controls">
-					<div>
+					<div class="control-container">
 						<h2>Division:</h2>
 						<select id="division"></select>
 						<h2>Team:</h2>
@@ -64,7 +64,7 @@
 						</select>
 					</div>
 
-					<div>
+					<div class="control-container">
 						<div>
 							<h2>Bans</h2>
 							<select id="bans" class="bans" data-minimum-count-selected="3"></select>
@@ -76,13 +76,13 @@
 						</div>
 					</div>
 
-					<div id="slider-div">
-						<div>
+					<div class="control-container" id="sliders-container">
+						<div class="slider-container">
 							<h2>Depth</h2>
 							<div class="tooltip">Tooltip: Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
 							<div id="depth" class="slider" data-range="1,10,1"></div>
 						</div>
-						<div>
+						<div class="slider-container">
 							<h2>Pruning Factor</h2>
 							<div class="tooltip">Tooltip: Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively. Increasing this value significantly reduces search time.</div>
 							<div id="pruning" class="slider" data-range="0,90,15" data-start="30" data-modifier="%"></div>
@@ -91,18 +91,18 @@
 				</div>
 
 				<div id="buttons">
-					<button id="start">Start</button>
-					<button id="stop" disabled>Stop</button>
+					<button class="button courier-new" id="start">Start</button>
+					<button class="button courier-new" id="stop" disabled>Stop</button>
 				</div>
 			</div>
 
-			<div id="results" style="display: none;">
+			<div class="section" id="results" style="display: none;">
 				<h1>Results</h1>
 				<div id="progress"></div>
 				<div id="results-container"></div>
 			</div>
 
-			<div id="time-benchmarks">
+			<div class="section" id="time-benchmarks">
 				<h1>Sample Time Benchmarks</h1>
 				<table id="time-benchmarks-table">
 					<tr>
@@ -113,24 +113,24 @@
 				</table>
 			</div>
 
-			<div id="description">
+			<div class="section text-section" id="description">
 				<h1>Description</h1>
 				<div>
-					/league (read: slash league) is a data-driven web app to help League of Legends players win more games by using machine learning during the champ select phase.
+					<span class="courier-new">/league</span> (read: slash league) is a data-driven web app to help League of Legends players win more games by using machine learning during the champ select phase.
 				</div>
 				<div>
-					Simliar to most chess AIs, /league uses a variation of <a href="https://en.wikipedia.org/wiki/Minimax">minimax</a> to determine an optimal team composition at any stage in champ select.
+					Simliar to most chess AIs, <span class="courier-new">/league</span> uses a variation of <a href="https://en.wikipedia.org/wiki/Minimax">minimax</a> to determine an optimal team composition at any stage in champ select.
 					An optimal team composition is made of champions that work well together as well as counter the opponent's champions.
 					Intelligent champion select is half the game - your opponents won't know what hit them.
 				</div>
 				<div>
-					There is no voting system in /league, because (pending Riot approval) we analyze millions of games a day in order to discover both visible and hard-to-see trends in champion countering statistics.
+					There is no voting system in <span class="courier-new">/league</span>, because (pending Riot approval) we analyze millions of games a day in order to discover both visible and hard-to-see trends in champion countering statistics.
 					(Fake data for now - to be fixed once we receive Riot data and an example is found) For example, lolcounter.com shows Kayle as the strongest counter to Zed, though an analysis of 200 million games shows that Zed wins 52% of games against Kayle.
-					It may be true that Kayle usually wins lane against Zed, but /league finds team compositions that will win players games - not necessarily winning lane.
+					It may be true that Kayle usually wins lane against Zed, but <span class="courier-new">/league</span> finds team compositions that will win players games - not necessarily winning lane.
 					(Again, fake data) Of the 200 million games analyzed from Patch 6.15, the outcome of 72% of games were predicted correctly based on team composition alone, acheiving 89% accuracy using weighted certainty.
 				</div>
 				<div>
-					/league does not take into account a player's (and their team's) personal statistics on each champion, though this feature may come in an upcoming release.
+					<span class="courier-new">/league</span> does not take into account a player's (and their team's) personal statistics on each champion, though this feature may come in an upcoming release.
 					Additionally, we don't take into account lane selection. We aim to mimic pro play champion select - where the team communicates fluidly, has every champ unlocked, and trades to match their lanes.
 					This also opens possibilities of non-conventional lane choices.
 					Still, popularity of a composition is always displayed, so players will be warned if they are choosing a risky path.
@@ -140,11 +140,11 @@
 				</div>
 			</div>
 
-			<div id="how-to-use">
+			<div class="section text-section" id="how-to-use">
 				<h1>How to Use</h1>
 				<div>
 					One at a time, select champions that have already been chosen in your game.
-					Be careful! Blue side is always on the left on /league.
+					Be careful! Blue side is always on the left on <span class="courier-new">/league</span>.
 				</div>
 				<div>
 					Next select your division and game side (blue/red).
@@ -171,7 +171,7 @@
 				</div>
 			</div>
 
-			<div id="additional-notes">
+			<div class="section text-section" id="additional-notes">
 				<div id="contact">
 					<h1>Contact</h1>
 					<div>Send comments, requests, questions, and bugs to <span>dcep93@gmail.com</span></div>
