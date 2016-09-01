@@ -45,16 +45,16 @@
 			</div>
 		</div>
 
-		<div id="splashes"></div>
+		<div id="splash-bank"></div>
 
 		<div>
-			<div class="section" id="controls-container">
+			<div class="section">
 				<div id="controls">
 					<div class="control-container">
 						<h2>Division:</h2>
-						<select id="division"></select>
+						<select id="division" class="single-multiple-select"></select>
 						<h2>Team:</h2>
-						<select id="team">
+						<select id="team" class="single-multiple-select">
 							<option value="blue">Blue</option>
 							<option value="red">Red</option>
 						</select>
@@ -76,12 +76,12 @@
 						<div class="slider-container">
 							<h2>Depth</h2>
 							<div class="tooltip">Tooltip: Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
-							<div id="depth" class="slider" data-range="1,10,1"></div>
+							<div id="depth" class="slider" data-range="1,10,1,1"></div>
 						</div>
 						<div class="slider-container">
 							<h2>Pruning Factor</h2>
 							<div class="tooltip">Tooltip: Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively. Increasing this value significantly reduces search time.</div>
-							<div id="pruning" class="slider" data-range="0,90,15" data-start="30" data-modifier="%"></div>
+							<div id="pruning" class="slider" data-range="0,90,15,30" data-start="30" data-modifier="%"></div>
 						</div>
 					</div>
 				</div>
@@ -177,7 +177,15 @@
 					<ul class="text">
 						<li>Send comments, requests, questions, and bugs to <span>dcep93@gmail.com</span></li>
 						<li>
-							If you can see this, the site is in construction! I'm looking for any and all tips out there, but primarily looking for suggestions on the Description section, How to Use section, the trash start/stop buttons, the trash tooltips in the controls section, the sample time benchmarks, and the design/feel of the overall site.
+							If you can see this, the site is in construction! I'm looking for any and all tips out there, but primarily looking for suggestions on
+							<ul>
+								<li>Results Section</li>
+								<li>Description Section</li>
+								<li>How to Use Section</li>
+								<li>Start/Stop Buttons</li>
+								<li>Sample Time Benchmarks</li>
+								<li>Design/Feel of the Overall Site</li>
+							</ul>
 						</li>
 					</ul>
 				</div>

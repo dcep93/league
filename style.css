@@ -54,7 +54,7 @@ html, body, #background {
 	overflow: hidden;
 }
 
-#splashes {
+#splash-bank {
 	display: none;
 }
 
@@ -98,9 +98,17 @@ html, body, #background {
 	overflow: scroll;
 }
 
+.tooltip {
+	display: none;
+}
+
 .control-container {
 	padding: 20px;
 	max-width: 400px;
+}
+
+.single-multiple-select {
+	width: 200px;
 }
 
 .bans {
@@ -132,7 +140,7 @@ html, body, #background {
 
 .button {
 	font-size: 2em;
-	padding: 14px;
+	padding: 14px 35px;
 	border-radius: 15px;
 	background-color: white;
 }
