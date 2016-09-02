@@ -9,6 +9,8 @@
 	<script type="text/javascript" src="shared/jquery/jquery-ui-1.12.0/jquery-ui.js"></script>
 	<link rel="stylesheet" href="shared/jquery/jquery-ui-1.12.0/jquery-ui.css">
 
+	<link rel="stylesheet" type="text/css" href="shared/bootstrap/bootstrap.css">
+
 	<script type="text/javascript" src="shared/multiple-select/multiple-select.js"></script>
 	<link rel="stylesheet" type="text/css" href="shared/multiple-select/multiple-select.css">
 	
@@ -50,35 +52,39 @@
 
 			<div class="section">
 				<div id="controls">
-					<div class="control-container">
-						<h2>Division:</h2>
-						<select id="division" class="single-multiple-select"></select>
-						<h2>Team:</h2>
-						<select id="team" class="single-multiple-select">
-							<option value="blue">Blue</option>
-							<option value="red">Red</option>
-						</select>
+					<div>
+						<div class="control-container">
+							<h2>Division:</h2>
+							<select id="division" class="single-multiple-select"></select>
+						</div>
+						<div class="control-container">
+							<h2>Team:</h2>
+							<select id="team" class="single-multiple-select">
+								<option value="blue">Blue</option>
+								<option value="red">Red</option>
+							</select>
+						</div>
 					</div>
 
-					<div class="control-container">
-						<div>
+					<div>
+						<div class="control-container">
 							<h2>Bans</h2>
 							<select id="bans" class="bans" data-minimum-count-selected="3"></select>
 						</div>
-						<div>
+						<div class="control-container">
 							<h2>Self-Bans</h2>
 							<div class="tooltip">Tooltip: The opposing team can select these champs, but you can't. (Champs you don't want to play)</div>
 							<select id="self-bans" class="bans" data-minimum-count-selected="8"></select>
 						</div>
 					</div>
 
-					<div class="control-container" id="sliders-container">
-						<div class="slider-container">
+					<div>
+						<div class="control-container">
 							<h2>Depth</h2>
 							<div class="tooltip">Tooltip: Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
 							<div id="depth" class="slider" data-range="1,10,1,1"></div>
 						</div>
-						<div class="slider-container">
+						<div class="control-container">
 							<h2>Pruning Factor</h2>
 							<div class="tooltip">Tooltip: Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively. Increasing this value significantly reduces search time.</div>
 							<div id="pruning" class="slider" data-range="0,90,15,30" data-start="30" data-modifier="%"></div>
@@ -100,12 +106,14 @@
 
 			<div class="section" id="time-benchmarks">
 				<h1>Sample Time Benchmarks</h1>
-				<table id="time-benchmarks-table">
-					<tr>
-						<th>Depth</th>
-						<th>Pruning Factor</th>
-						<th>Duration</th>
-					</tr>
+				<table id="time-benchmarks-table" class="table">
+					<thead>
+						<tr>
+							<th>Depth</th>
+							<th>Pruning Factor</th>
+							<th>Duration</th>
+						</tr>
+					</thead>
 				</table>
 			</div>
 
@@ -182,8 +190,6 @@
 								<li>Results Section</li>
 								<li>Description Section</li>
 								<li>How to Use Section</li>
-								<li>Start/Stop Buttons</li>
-								<li>Sample Time Benchmarks</li>
 								<li>Design/Feel of the Overall Site</li>
 							</ul>
 						</li>

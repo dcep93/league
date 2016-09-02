@@ -24,7 +24,7 @@ html, body, #background {
 }
 
 .section {
-	margin: 15px;
+	margin: 30px;
 	border: 4px solid;
 	background-color: rgba(255,255,255,0.7);
 	border-radius: 20px;
@@ -120,21 +120,14 @@ html, body, #background {
 	width: 350px;
 }
 
-#sliders-container {
-	min-width: 300px;
-}
-
-.slider-container {
-	padding-bottom: 24px;
-}
-
 .slider {
+	min-width: 320px;
 	background: #519D9E;
 }
 
 .slider label {
   position: absolute;
-  margin-top: 20px;
+  margin: 20px auto;
   transform: translate(-50%, 0);
 }
 
@@ -150,18 +143,21 @@ html, body, #background {
 	background-color: white;
 }
 
+#time-benchmarks-table {
+	max-width: 1000px;
+}
+
+#time-benchmarks-table > thead > tr > th {
+	border: none;
+}
+
+#time-benchmarks-table > * > tr > * {
+	border-color: black;
+}
+
 #results {
-	max-height: 800px;
+	max-height: 500px;
 	overflow: scroll;
-}
-
-.result {
-	margin: 20px;
-}
-
-.result-part {
-	display: inline-block;
-	margin: 10px;
 }
 
 .text {
