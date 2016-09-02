@@ -5,6 +5,11 @@ html, body, #background {
     padding: 0;
 }
 
+#content {
+	max-width: 2000px;
+	margin: 0 auto;
+}
+
 #background {
 	background: url(images/background.jpg);
 	background-size: cover;
