@@ -100,7 +100,7 @@ html, body, #background {
 #controls {
 	display: flex;
 	justify-content: space-around;
-	overflow: scroll;
+	flex-wrap: wrap;
 }
 
 .tooltip {
