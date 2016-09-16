@@ -67,11 +67,11 @@ html, body, #background {
 	width: 100%;
 }
 
-#blue-team .pick {
+.blue-pick, .blue-result {
 	border-color: blue;
 }
 
-#red-team .pick {
+.red-pick, .red-result {
 	border-color: red;
 }
 
@@ -159,6 +159,30 @@ html, body, #background {
 #results {
 	max-height: 500px;
 	overflow: scroll;
+}
+
+.result {
+	margin: 40px 0;
+}
+
+.result-part {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.result-team {
+	width: 498px;
+	padding: 20px;
+	border-width: 4px;
+	border-style: solid;
+	border-radius: 20px;
+	text-align: center;
+	margin: 10px;
+}
+
+.result-scores {
+	font-size: 1.4em;
+	padding: 30px;
 }
 
 .text {
