@@ -3,6 +3,8 @@ html, body, #background {
 	height: 100%;
     margin: 0;
     padding: 0;
+    top: 0;
+    bottom: 0;
 }
 
 #content {
@@ -13,7 +15,7 @@ html, body, #background {
 #background {
 	background: url(images/background.jpg);
 	background-size: cover;
-    opacity: .9;
+    opacity: .8;
 	position: fixed;
     z-index: -1;
 }
@@ -26,9 +28,23 @@ html, body, #background {
 .section {
 	margin: 45px;
 	border: 4px solid;
-	background-color: rgba(255,255,255,0.7);
+	background-color: rgba(255,255,255,0.75);
 	border-radius: 20px;
 	padding: 20px;
+}
+
+.subsection {
+	margin: 20px;
+}
+
+#logo-section {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.logo-subsection {
+	max-width: 1000px;
 }
 
 #logo {
@@ -57,6 +73,10 @@ html, body, #background {
 	border: 2px solid;
 	border-radius: 15px;
 	overflow: hidden;
+}
+
+.pick-hover {
+	background-color: rgba(255,255,255,0.75);
 }
 
 #splash-bank {
