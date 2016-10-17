@@ -9,6 +9,7 @@ html, body, #background {
 
 #content {
 	max-width: 2000px;
+	max-width: 80%;
 	margin: 0 auto;
 }
 
@@ -207,4 +208,8 @@ html, body, #background {
 
 .text {
 	font-size: 1.2em;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
 }

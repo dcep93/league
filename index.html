@@ -57,14 +57,15 @@
 			<div id="splash-bank"></div>
 
 			<div class="section">
+				<h1 class="courier-new">Controls</h1>
 				<div id="controls">
 					<div>
 						<div class="control-container">
-							<h2>Division:</h2>
+							<h2 class="courier-new">Division:</h2>
 							<select id="division" class="single-multiple-select"></select>
 						</div>
 						<div class="control-container">
-							<h2>Team:</h2>
+							<h2 class="courier-new">Team:</h2>
 							<select id="team" class="single-multiple-select">
 								<option value="blue">Blue</option>
 								<option value="red">Red</option>
@@ -74,11 +75,11 @@
 
 					<div>
 						<div class="control-container">
-							<h2>Bans</h2>
+							<h2 class="courier-new">Bans</h2>
 							<select id="bans" class="bans" data-minimum-count-selected="3"></select>
 						</div>
 						<div class="control-container">
-							<h2>Self-Bans</h2>
+							<h2 class="courier-new">Self-Bans</h2>
 							<div class="tooltip">Tooltip: The opposing team can select these champs, but you can't. (Champs you don't want to play)</div>
 							<select id="self-bans" class="bans" data-minimum-count-selected="8"></select>
 						</div>
@@ -86,12 +87,12 @@
 
 					<div>
 						<div class="control-container">
-							<h2>Depth</h2>
+							<h2 class="courier-new">Depth</h2>
 							<div class="tooltip">Tooltip: Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
-							<div id="depth" class="slider" data-range="0,10,1,1"></div>
+							<div id="depth" class="slider" data-range="0,10,1,1" data-start="1"></div>
 						</div>
 						<div class="control-container">
-							<h2>Pruning Factor</h2>
+							<h2 class="courier-new">Pruning Factor</h2>
 							<div class="tooltip">Tooltip: Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively. Increasing this value significantly reduces search time.</div>
 							<div id="pruning" class="slider" data-range="0,90,15,30" data-start="30" data-modifier="%"></div>
 						</div>
@@ -105,13 +106,13 @@
 			</div>
 
 			<div class="section" id="results" style="display: none;">
-				<h1>Results</h1>
+				<h1 class="courier-new">Results</h1>
 				<div id="progress"></div>
 				<div id="results-container"></div>
 			</div>
 
 			<div class="section" id="time-benchmarks">
-				<h1>Sample Time Benchmarks</h1>
+				<h1 class="courier-new">Sample Time Benchmarks</h1>
 				<table id="time-benchmarks-table" class="table">
 					<thead>
 						<tr>
@@ -125,7 +126,7 @@
 
 			<div class="section" id="description">
 				<div class="subsection">
-					<h1>Description</h1>
+					<h1 class="courier-new">Description</h1>
 					<ul class="text">
 						<li>
 							Similar to most chess AIs, <span class="courier-new">/league</span> uses a variation of minimax to determine an optimal team composition at any stage in champ select. An optimal team composition is made of champions that work well together as well as counter the opponent's champions. 
@@ -133,7 +134,7 @@
 					</ul>
 				</div>
 				<div class="subsection">
-					<h1>No Voting System</h1>
+					<h1 class="courier-new">No Voting System</h1>
 					<ul class="text">
 						<li>
 							Unlike other tools, there is no voting system in <span class="courier-new">/league</span>. (Pending Riot approval) We analyze millions of games a day in order to discover both visible and hard-to-see trends in champion countering statistics. (Currently, our tool features fake data but will be developed with real data upon Riot approval.) For example, lolcounter.com shows Kayle as the strongest counter to Zed. However, <span class="courier-new">/league</span> statistics after 200 million games show that Zed wins 52% of games against Kayle.
@@ -141,7 +142,7 @@
 					</ul>
 				</div>
 				<div class="subsection">
-					<h1>Win More Games</h1>
+					<h1 class="courier-new">Win More Games</h1>
 					<ul class="text">
 						<li>
 							Lolcounter's voters may recommend Kayle as a counter to Zed in lane, but <span class="courier-new">/league</span> finds team compositions that will win games. Of the 200 million games analyzed from Patch 6.18, the outcome of 72% of games were predicted correctly based on team composition alone, achieving 89% accuracy using weighted certainty.
@@ -152,7 +153,7 @@
 					</ul>
 				</div>
 				<div class="subsection">
-					<h1>How to Use</h1>
+					<h1 class="courier-new">How to Use</h1>
 					<ul class="text">
 						<li>
 							One at a time, select champions that have already been chosen in your game. Be careful! Blue side is always on the left on <span class="courier-new">/league</span>.
@@ -175,7 +176,7 @@
 
 			<div class="section" id="additional-notes">
 				<div class="subsection">
-					<h1>Contact</h1>
+					<h1 class="courier-new">Contact</h1>
 					<ul class="text">
 						<li>Send comments, requests, questions, and bugs to <span>dcep93@gmail.com</span></li>
 						<li>
@@ -190,7 +191,7 @@
 					</ul>
 				</div>
 				<div class="subsection">
-					<h1>Terms of Service</h1>
+					<h1 class="courier-new">Terms of Service</h1>
 					<ul class="text">
 						<li>Coming Soon</li>
 					</ul>
