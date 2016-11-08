@@ -9,7 +9,7 @@ html, body, #background {
 
 #content {
 	max-width: 2000px;
-	max-width: 80%;
+	max-width: 85%;
 	margin: 0 auto;
 }
 
@@ -46,6 +46,7 @@ html, body, #background {
 
 .logo-subsection {
 	max-width: 1000px;
+	margin: 10px;
 }
 
 #logo {
@@ -69,8 +70,8 @@ html, body, #background {
 }
 
 .pick {
-	height: 110px;
-	width: 320px;
+	height: 100px;
+	width: 290px;
 	border: 2px solid;
 	border-radius: 15px;
 	overflow: hidden;

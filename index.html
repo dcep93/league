@@ -21,7 +21,7 @@
 	<script src="shared/firebase/firebase-app.js"></script>
 	<script src="shared/firebase/firebase-database.js"></script>
 
-	<script type="text/javascript" src="js/design.js"></script>	
+	<script type="text/javascript" src="league-private/js/design.js"></script>	
 	<script type="text/javascript" src="js/loadNetworks.js"></script>	
 
 	<link rel="stylesheet" type="text/css" href="style.css">
@@ -66,6 +66,7 @@
 						</div>
 						<div class="control-container">
 							<h2 class="courier-new">Team:</h2>
+							<div class="tooltip">Tooltip: Only impacts self-bans</div>
 							<select id="team" class="single-multiple-select">
 								<option value="blue">Blue</option>
 								<option value="red">Red</option>
@@ -75,11 +76,11 @@
 
 					<div>
 						<div class="control-container">
-							<h2 class="courier-new">Bans</h2>
+							<h2 class="courier-new">Bans:</h2>
 							<select id="bans" class="bans" data-minimum-count-selected="3"></select>
 						</div>
 						<div class="control-container">
-							<h2 class="courier-new">Self-Bans</h2>
+							<h2 class="courier-new">Self-Bans:</h2>
 							<div class="tooltip">Tooltip: The opposing team can select these champs, but you can't. (Champs you don't want to play)</div>
 							<select id="self-bans" class="bans" data-minimum-count-selected="8"></select>
 						</div>
@@ -87,12 +88,12 @@
 
 					<div>
 						<div class="control-container">
-							<h2 class="courier-new">Depth</h2>
+							<h2 class="courier-new">Depth:</h2>
 							<div class="tooltip">Tooltip: Number of additional champs to search from. Be careful! Increasing depth drastically increases search time!</div>
 							<div id="depth" class="slider" data-range="0,10,1,1" data-start="1"></div>
 						</div>
 						<div class="control-container">
-							<h2 class="courier-new">Pruning Factor</h2>
+							<h2 class="courier-new">Pruning Factor:</h2>
 							<div class="tooltip">Tooltip: Proportion of branches to ignore at each level of the tree. Branches that have a low score at the current depth will not be searched further, evaluated recursively. Increasing this value significantly reduces search time.</div>
 							<div id="pruning" class="slider" data-range="0,90,15,30" data-start="30" data-modifier="%"></div>
 						</div>
@@ -137,7 +138,7 @@
 					<h1 class="courier-new">No Voting System</h1>
 					<ul class="text">
 						<li>
-							Unlike other tools, there is no voting system in <span class="courier-new">/league</span>. (Pending Riot approval) We analyze millions of games a day in order to discover both visible and hard-to-see trends in champion countering statistics. (Currently, our tool features fake data but will be developed with real data upon Riot approval.) For example, lolcounter.com shows Kayle as the strongest counter to Zed. However, <span class="courier-new">/league</span> statistics after 200 million games show that Zed wins 52% of games against Kayle.
+							Unlike other tools, there is no voting system in <span class="courier-new">/league</span>. (Pending analysis) We analyze millions of games a day in order to discover both visible and hard-to-see trends in champion countering statistics. (Currently, our tool features fake data but will be developed with real data soon.) For example, lolcounter.com shows Kayle as the strongest counter to Zed. However, <span class="courier-new">/league</span> statistics after 200 million games show that Zed wins 52% of games against Kayle.
 						</li>
 					</ul>
 				</div>
