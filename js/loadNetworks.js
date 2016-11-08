@@ -1,1 +1,38 @@
-var _0x72ca=["\x75\x73\x65\x20\x73\x74\x72\x69\x63\x74","\x61\x70\x70\x6C\x79","\x70\x61\x74\x68\x5F\x70\x72\x65\x66\x69\x78","","\x6E\x65\x74\x77\x6F\x72\x6B\x73\x2F","\x2F\x69\x6E\x66\x6F\x2E\x6A\x73\x6F\x6E","\x67\x61\x6D\x65","\x64\x69\x76\x69\x73\x69\x6F\x6E\x73","\x2F","\x2E\x6A\x73\x6F\x6E","\x64\x69\x76\x69\x73\x69\x6F\x6E","\x67\x65\x74\x4A\x53\x4F\x4E"];_0x72ca[0];var loadNetworks;(function(){loadNetworks= function(){_0x98e7x2[_0x72ca[1]](this,arguments)};function _0x98e7x2(_0x98e7x3,_0x98e7x4,_0x98e7x5){function _0x98e7x6(_0x98e7x3){for(var _0x98e7x7 in _0x98e7x3){if(_0x98e7x3[_0x98e7x7]=== null){return false}};return true}for(var _0x98e7x7 in _0x98e7x3){$[_0x72ca[11]]((window[_0x72ca[2]]|| _0x72ca[3])+ _0x72ca[4]+ _0x98e7x7+ _0x72ca[5],function(_0x98e7x8){_0x98e7x3[_0x98e7x8[_0x72ca[6]]]= _0x98e7x8;if(_0x98e7x6(_0x98e7x3)){_0x98e7x5()};_0x98e7x4[_0x98e7x8[_0x72ca[6]]]= {};for(var _0x98e7x9 in _0x98e7x8[_0x72ca[7]]){$[_0x72ca[11]]((window[_0x72ca[2]]|| _0x72ca[3])+ _0x72ca[4]+ _0x98e7x8[_0x72ca[6]]+ _0x72ca[8]+ _0x98e7x9+ _0x72ca[9],function(_0x98e7xa){_0x98e7x4[_0x98e7xa[_0x72ca[6]]][_0x98e7xa[_0x72ca[10]]]= _0x98e7xa})}})}}})()
+'use strict';
+
+var loadNetworks;
+
+(function(){
+
+loadNetworks = function(){
+	loadNetworksMask.apply(this, arguments);
+}
+
+function loadNetworksMask(games, ALL_NETWORKS, initialize){
+	function doneLoadingGames(games){
+		for(var game in games){
+			if(games[game] === null){
+				return false;
+			}
+		}
+		return true;
+	}
+	for(var game in games){
+		$.getJSON((window.path_prefix || '') + 'networks/'+game+'/info.json', function(info){
+			games[info.game] = info;
+
+			if(doneLoadingGames(games)){
+				initialize();
+			}
+
+			ALL_NETWORKS[info.game] = {};
+			for(var division in info.divisions){
+				$.getJSON((window.path_prefix || '') + 'networks/'+info.game+'/'+division+'.json', function(json){
+					ALL_NETWORKS[json.game][json.division] = json;
+				});
+			}
+		});
+	}
+}
+
+})();
